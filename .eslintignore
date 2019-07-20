@@ -1,0 +1,10 @@
+{
+  "name": "Project_2",
+  "version": "0.0.1",
+  "eslintConfig": {
+      "env": {
+          "node": true
+      }
+  },
+  "eslintIgnore": ["public/js/index.js"]
+}
