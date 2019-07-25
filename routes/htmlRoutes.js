@@ -145,20 +145,24 @@ module.exports = function (app) {
   });
 
 
-  // Add Club page POST route
-  app.post("/addclub", function (req, res) {
-    // If the user is logged in
-    if (req.session.loggedin) {
-      db.Club.create(req.body).then(function (dbClub) {
-        res.json(dbClub);
-      });
-    } else {
-      // User is not logged in      
-      res.render('login', {
-        msg: 'You are not logged in. Please log in to create a club:'
-      });
-    }
-  });
+  // // Add Club page POST route
+  // app.post("/addclub", function (req, res) {
+  //   console.log("TEST")
+  //   // If the user is logged in
+  //   if (req.session.loggedin) {
+  //     db.Club.create(req.body).then(function (dbClub) {
+  //       res.json(dbClub);
+  //     });
+  //     db.UserClubs.create().then(function (dbClub) {
+  //       res.json(dbClub);
+  //     });
+  //   } else {
+  //     // User is not logged in      
+  //     res.render('login', {
+  //       msg: 'You are not logged in. Please log in to create a club:'
+  //     });
+  //   }
+  // });
 
 
   // Load clubs page and pass in a club by id

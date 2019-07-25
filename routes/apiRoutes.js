@@ -34,15 +34,19 @@ app.post('/api/register', function (req, res) {
 
 // Create a new club
 app.post('/api/addclub', function (req, res) {
-  // console.log("* * * * ****** * * *");
-  // console.log("req.body", req.body);
-  // console.log("req.session", req.session);
+  console.log("* * * * ****** * * *");
+  console.log("req.body", req.body);
+  console.log("req.session", req.session);
   var clubInfo = req.body;
   var userId = req.session.userid;
   clubInfo.UserId = userId;
   db.Club.create(req.body).then(function (newclub) {
     res.json(newclub);
+    console.log("TESTING");
+    var userClubInfo = {UserId: userId, ClubId: newclub.id};
+    db.UserClubs.create(userClubInfo);
   });
+
 });
 
 
