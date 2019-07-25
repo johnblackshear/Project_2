@@ -114,12 +114,25 @@ module.exports = function (app) {
 
   // Clubs page GET route
   app.get('/clubs', function (req, res) {
-    db.Club.findAll({}).then(function (dbClubs) {
-      res.render('clubs', {
-        clubname: dbClubs
+    if (req.session.loggedin) {
+      db.Club.findAll({}).then(function (dbClubs) {
+        res.render('clubs', {
+          clubname: dbClubs,
+          addclub: '<a href=/addclub id=add-club>Add a Club</a>'
+        });
       });
-    });
+    } else {
+      db.Club.findAll({}).then(function (dbClubs) {
+        res.render('clubs', {
+          clubname: dbClubs,
+          addclub: ''
+        });
+      });
+    };
   });
+
+
+
 
 
   // Add Club page GET route
@@ -145,37 +158,56 @@ module.exports = function (app) {
   });
 
 
-  // // Add Club page POST route
-  // app.post("/addclub", function (req, res) {
-  //   console.log("TEST")
-  //   // If the user is logged in
-  //   if (req.session.loggedin) {
-  //     db.Club.create(req.body).then(function (dbClub) {
-  //       res.json(dbClub);
-  //     });
-  //     db.UserClubs.create().then(function (dbClub) {
-  //       res.json(dbClub);
-  //     });
-  //   } else {
-  //     // User is not logged in      
-  //     res.render('login', {
-  //       msg: 'You are not logged in. Please log in to create a club:'
-  //     });
-  //   }
-  // });
-
-
   // Load clubs page and pass in a club by id
   app.get("/clubs/:id", function (req, res) {
-    db.Club.findOne({ where: { id: req.params.id } }).then(function (dbClub) {
-      var clubname = JSON.stringify(dbClub.clubname);
-      clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
-      res.render("club", {
-        clubname: 'Clubname: ' + clubname,
-        id: 'ID: ' + dbClub.id,
-        description: dbClub.description
+    var clubId = req.params.id;
+    if (req.session.loggedin) {
+      var userId = req.session.userid;
+      console.log("userid", userId);
+      console.log("clubId:", clubId);
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var ownerId = dbClub.UserId;
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+        if (ownerId === userId) {
+          res.render("club", {
+            clubname: clubname,
+            id: 'Club ID: ' + dbClub.id,
+            description: dbClub.description,
+            message: 'You are the owner of this club!'
+          });
+        } else {
+
+          db.UserClubs.count({ where: { ClubId: clubId, UserId: userId } }).then(function (count) {
+            if (count === 0) {
+              res.render("club", {
+                clubname: clubname,
+                id: 'Club ID: ' + dbClub.id,
+                description: dbClub.description,
+                message: 'Join club'
+              });
+            } else {
+              res.render("club", {
+                clubname: clubname,
+                id: 'Club ID: ' + dbClub.id,
+                description: dbClub.description,
+                message: 'You are a member of this club!'
+              });
+            }
+          });
+        }
       });
-    });
+    } else {
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+        res.render("club", {
+          clubname: clubname,
+          id: 'Club ID: ' + dbClub.id,
+          description: dbClub.description
+        });
+      });
+    }
   });
 
 
@@ -185,15 +217,15 @@ module.exports = function (app) {
   });
 
 
-// Logout 
-app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return console.log(err);
-    }
-    res.redirect('/');
+  // Logout 
+  app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return console.log(err);
+      }
+      res.redirect('/');
+    });
   });
-});
 
 
 };
