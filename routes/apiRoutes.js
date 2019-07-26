@@ -2,56 +2,37 @@ var db = require('../models');
 
 module.exports = function (app) {
 
-  // Create a new user
+  ////////////////////////////////////////////////////////
+  // API USERS
+
+  // Register a new User
   app.post('/api/register', function (req, res) {
-    db.User.create(req.body).then(function (dbExample) {
-      res.json(dbExample);
+    db.User.create(req.body).then(function (dbUser) {
+      res.json(dbUser);
     });
   });
 
-
-  // Get all clubs
-  app.get('/api/clubs', function (req, res) {
-    db.Club.findAll({}).then(function (dbClubs) {
-      res.json(dbClubs);
+  // Get All Users
+  app.get('/api/users', function (req, res) {
+    db.User.findAll().then(function (dbUsers) {
+      res.json(dbUsers);
     });
   });
 
-
-  // Delete a club by id
-  app.delete('/api/clubs/:id', function (req, res) {
-    db.Club.destroy({ where: { id: req.params.id } }).then(function (dbClub) {
-      res.json(dbClub);
+  // Get a User by id
+  app.get('/api/users/:id', function (req, res) {
+    db.User.findOne({ where: { id: req.params.id } }).then(function (dbUser) {
+      res.json(dbUser);
     });
   });
 
-
-  // Create a new club
-  app.post('/api/addclub', function (req, res) {
-    console.log("* * * * ****** * * *");
-    console.log("req.body", req.body);
-    console.log("req.session", req.session);
-    var clubInfo = req.body;
-    var userId = req.session.userid;
-    clubInfo.UserId = userId;
-    db.Club.create(req.body).then(function (newclub) {
-      res.json(newclub);
-      var userClubInfo = { UserId: userId, ClubId: newclub.id };
-      db.UserClubs.create(userClubInfo);
+  // Delete a User by id
+  app.delete('/api/users/:id', function (req, res) {
+    db.User.destroy({ where: { id: req.params.id } }).then(function (dbUser) {
+      res.json(dbUser);
     });
   });
-
-
-  // Join a club by id
-  app.post('/api/clubs/:id', function (req, res) {
-    var clubId = req.params.id;
-    var userId = req.session.userid;
-    var userClubInfo = { UserId: userId, ClubId: clubId };
-    console.log("HEY TEST");
-    console.log("clubId:", clubId);
-    console.log("userId:", userId);
-    db.UserClubs.create(userClubInfo);
-  });
+  ////////////////////////////////////////////////////////
 
 
 
