@@ -6,9 +6,11 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     User.associate = function (models) {
-        // Associating User with Clubs
-        User.belongsToMany(models.Club, {through: models.UserClubs});
+        User.belongsToMany(models.Club, {
+            through: models.UserClubs
+        });
     };
 
     return User;
 };
+

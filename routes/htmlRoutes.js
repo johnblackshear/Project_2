@@ -118,7 +118,7 @@ module.exports = function (app) {
       db.Club.findAll({}).then(function (dbClubs) {
         res.render('clubs', {
           clubname: dbClubs,
-          addclub: '<a href=/addclub id=add-club>Add a Club</a>'
+          addclub: '<a href="/addclub" id="add-club">Add a Club</a>'
         });
       });
     } else {
@@ -157,18 +157,24 @@ module.exports = function (app) {
     }
   });
 
+/////////////////////////////////////////////////
 
   // Load clubs page and pass in a club by id
   app.get("/clubs/:id", function (req, res) {
     var clubId = req.params.id;
+
+    // If the user is logged in
     if (req.session.loggedin) {
+
       var userId = req.session.userid;
       console.log("userid", userId);
       console.log("clubId:", clubId);
+      
       db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
         var ownerId = dbClub.UserId;
         var clubname = JSON.stringify(dbClub.clubname);
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+
         if (ownerId === userId) {
           res.render("club", {
             clubname: clubname,
@@ -177,14 +183,14 @@ module.exports = function (app) {
             message: 'You are the owner of this club!'
           });
         } else {
-
           db.UserClubs.count({ where: { ClubId: clubId, UserId: userId } }).then(function (count) {
+            
             if (count === 0) {
               res.render("club", {
                 clubname: clubname,
                 id: 'Club ID: ' + dbClub.id,
                 description: dbClub.description,
-                message: 'Join club'
+                message: '<button class="btn float-right join" id="join-btn">Join Club</button>'
               });
             } else {
               res.render("club", {
@@ -194,10 +200,16 @@ module.exports = function (app) {
                 message: 'You are a member of this club!'
               });
             }
+
           });
         }
+
       });
+
     } else {
+
+      console.log("***************** FIND ME *****************************");
+      // User is not logged in
       db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
         var clubname = JSON.stringify(dbClub.clubname);
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
@@ -207,9 +219,11 @@ module.exports = function (app) {
           description: dbClub.description
         });
       });
+
     }
   });
 
+/////////////////////////////////////////////////
 
   // Books GET route
   app.get("/books", function (req, res) {

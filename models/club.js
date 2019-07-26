@@ -7,12 +7,11 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Club.associate = function (models) {
-        // Associating Club with Users
         Club.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
             },
-            through: models.UserClubs
+            through: models.ClubOwners
         });
     };
     return Club;
