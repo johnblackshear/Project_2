@@ -5,6 +5,8 @@ var userSession;
 module.exports = function (app) {
 
   //////////////////////////////////////
+  // HOMEPAGE HTML ROUTES
+
   // Homepage HTMLGET route
   app.get('/', function (req, res) {
     // If the user is logged in
@@ -25,6 +27,8 @@ module.exports = function (app) {
 
 
   //////////////////////////////////////
+  // REGISTER HTML ROUTES
+
   // Register User HTML GET route
   app.get('/register', function (req, res) {
     // If the user is logged in
@@ -39,6 +43,8 @@ module.exports = function (app) {
 
 
   //////////////////////////////////////
+  // USERS HTML ROUTES
+
   // Users HTML GET route
   app.get('/users', function (req, res) {
     db.User.findAll({}).then(function (dbUsers) {
@@ -49,6 +55,8 @@ module.exports = function (app) {
 
 
   //////////////////////////////////////
+  // LOGIN HTML ROUTES
+
   // Login HTML GET route
   app.get("/login", function (req, res) {
     // If the user is logged in
@@ -58,6 +66,36 @@ module.exports = function (app) {
       // User is not logged in
       res.render('login');
     }
+  });
+
+  // Login HTML POST route
+  app.post('/login', function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    if (username && password) {
+      db.User.findOne({
+        where: {
+          username: username,
+          password: password
+        }
+      }).then(function (results) {
+        if (results) {
+          // A matching user record was found.
+          req.session.userid = results.id;
+          req.session.loggedin = true;
+          req.session.username = username;
+          res.redirect('/profile');
+        } else {
+          // No matching record was found.
+          res.render('login', {
+            msg: 'No matching user record was found. Please log in to view your profile:'
+          });
+        }
+      });
+    } else {
+      response.send('Please enter Username and Password!');
+      response.end();
+    };
   });
   //////////////////////////////////////
 
@@ -94,7 +132,25 @@ module.exports = function (app) {
   //////////////////////////////////////
 
 
+  //////////////////////////////////////
+  // Books HTML GET route
+  app.get("/books", function (req, res) {
+    res.render('books');
+  });
+  //////////////////////////////////////
 
+
+  //////////////////////////////////////
+  // Logout 
+  app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return console.log(err);
+      }
+      res.redirect('/');
+    });
+  });
+  //////////////////////////////////////
 
 
 };
