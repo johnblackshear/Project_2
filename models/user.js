@@ -5,11 +5,11 @@ module.exports = function (sequelize, DataTypes) {
         email: DataTypes.STRING
     });
 
-    // User.associate = function (models) {
-    //     User.belongsToMany(models.Club, {
-    //         through: models.UserClubs
-    //     });
-    // };
+    User.associate = function (models) {
+        User.hasMany(models.Club, {
+            onDelete: "cascade"
+        });
+    };
 
     return User;
 };

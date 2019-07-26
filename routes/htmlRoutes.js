@@ -133,6 +133,119 @@ module.exports = function (app) {
 
 
   //////////////////////////////////////
+  // Clubs HTML ROUTES
+
+  // Add Club page GET route
+  app.get('/addclub', function (req, res) {
+    // If the user is logged in
+    if (req.session.loggedin) {
+      console.log("req.session: ", req.session);
+      console.log("USERID: ", req.session.userid);
+      var userid = req.session.userid;
+      var username = req.session.username;
+      res.render('addclub', {
+        userid: userid,
+        username: username
+      });
+    } else {
+      // User is not logged in
+      res.render('login', {
+        msg: 'You are not logged in. Please log in to create a club:'
+      });
+    }
+  });
+
+  // Clubs HTML GET route
+  app.get('/clubs', function (req, res) {
+    // If the user is logged in
+    if (req.session.loggedin) {
+      db.Club.findAll({}).then(function (dbClubs) {
+        res.render('clubs', {
+          clubname: dbClubs,
+          addclub: '<a href="/addclub" id="add-club">Add a Club</a>'
+        });
+      });
+    } else {
+      // User is not logged in
+      db.Club.findAll({}).then(function (dbClubs) {
+        res.render('clubs', {
+          clubname: dbClubs,
+          addclub: ''
+        });
+      });
+    };
+  });
+
+
+
+  // Club GET ROUTE
+  app.get("/clubs/:id", function (req, res) {
+    var clubId = req.params.id;
+
+    // If the user is logged in
+    if (req.session.loggedin) {
+
+      var userId = req.session.userid;
+      console.log("userid", userId);
+      console.log("clubId:", clubId);
+
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var ownerId = dbClub.UserId;
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+
+        if (ownerId === userId) {
+          res.render("club", {
+            clubname: clubname,
+            id: 'Club ID: ' + dbClub.id,
+            description: dbClub.description,
+            message: 'You are the owner of this club!'
+          });
+        } else {
+          db.UserClubs.count({ where: { ClubId: clubId, UserId: userId } }).then(function (count) {
+
+            if (count === 0) {
+              res.render("club", {
+                clubname: clubname,
+                id: 'Club ID: ' + dbClub.id,
+                description: dbClub.description,
+                message: '<button class="btn float-right join" id="join-btn">Join Club</button>'
+              });
+            } else {
+              res.render("club", {
+                clubname: clubname,
+                id: 'Club ID: ' + dbClub.id,
+                description: dbClub.description,
+                message: 'You are a member of this club!'
+              });
+            }
+
+          });
+        }
+
+      });
+
+    } else {
+
+      console.log("***************** FIND ME *****************************");
+      // User is not logged in
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+        res.render("club", {
+          clubname: clubname,
+          id: 'Club ID: ' + dbClub.id,
+          description: dbClub.description
+        });
+      });
+
+    }
+  });
+  //////////////////////////////////////
+
+
+
+  //////////////////////////////////////
   // Books HTML GET route
   app.get("/books", function (req, res) {
     res.render('books');
