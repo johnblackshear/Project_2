@@ -117,9 +117,9 @@ module.exports = function (app) {
         var renderEmail = JSON.stringify(userResult.email);
         renderEmail = renderEmail.replace(/^"(.+(?="$))"$/, '$1');
         res.render('profile', {
-          loginstatus: 'You are logged in, ' + userSessionName,
           username: renderUsername,
-          email: renderEmail
+          email: renderEmail,
+          clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '>test</span>'
         });
       });
     } else {

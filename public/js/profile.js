@@ -4,57 +4,43 @@ var $clubList = $('#club-list');
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-    getClubs: function () {
+    getClubs: function (id) {
         return $.ajax({
-            url: 'api/clubs',
+            url: 'api/users/' + id + '/clubs',
             type: 'GET'
         });
     }
 };
 
-// // The API object contains methods for each kind of request we'll make
-// var API = {
-//     getClub: function (id) {
-//         return $.ajax({
-//             url: '/api/clubs/' + id,
-//             type: 'GET'
-//         });
-//     },
-//     joinClub: function (id) {
-//         return $.ajax({
-//             url: '/api/clubs/' + id,
-//             type: 'POST'
-//         });
-//     }
-// };
+
 
 // // // refreshClubs gets new Clubs from the db and repopulates the list
-// var refreshClub = function () {
+var refreshClub = function () {
 
-//     var idToGet = $joinButton
-//         .attr('data-clubid');
-//     console.log("IDTOGET: ", idToGet);
+    var idToGet = $clubList
+        .attr('data-userid');
+    console.log("IDTOGET: ", idToGet);
 
-//     API.getClub(idToGet).then(function (data) {
-//         console.log("YO DATA: ", data);
-//         var $members = data.Users.map(function (user) {
-//             var $a = $('<a>')
-//                 .text(user.username)
-//                 .attr('href', '/api/users/' + user.id)
-//                 .append('<br>')
+    API.getClubs(idToGet).then(function (data) {
+        console.log("YO DATA: ", data);
+        var $clubs = data[0].Clubs2.map(function (club) {
+            var $a = $('<a>')
+                .text(club.clubname)
+                .attr('href', '/api/clubs/' + club.id)
+                .append('<br>')
 
-//             var $li = $('<li>')
-//                 .attr({
-//                     class: 'list-group-item',
-//                     'data-id': user.id
-//                 })
-//                 .append($a)
-//             return $li
-//         })
-//         $clubList.empty();
-//         $clubList.append($members);
-//     });
-// };
+            var $li = $('<li>')
+                .attr({
+                    class: 'list-group-item',
+                    'data-id': club.id
+                })
+                .append($a)
+            return $li
+        })
+        $clubList.empty();
+        $clubList.append($clubs);
+    });
+};
 
 
 // var handleJoinBtnClick = function () {
@@ -67,7 +53,7 @@ var API = {
 // };
 
 
-// refreshClub();
+refreshClub();
 
 
 // $joinButton.on('click', handleJoinBtnClick);

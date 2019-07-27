@@ -44,6 +44,21 @@ module.exports = function (app) {
 
 
 
+
+  // Get a User by id
+  app.get('/api/users/:id/clubs', function (req, res) {
+    db.User.findAll({
+      include: [db.Club,  {model: db.Club, as: 'Clubs2'} ], 
+      where: { id: req.params.id }
+    }).then(function (dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+
+
+
+
   // Delete a User by id
   app.delete('/api/users/:id', function (req, res) {
     db.User.destroy({ where: { id: req.params.id } }).then(function (dbUser) {
