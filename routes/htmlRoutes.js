@@ -209,7 +209,7 @@ module.exports = function (app) {
                 clubname: clubname,
                 id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
                 description: dbClub.description,
-                message: '<button class="btn float-right" data-clubId=' + dbClub.id + '>Join Club</button>'
+                message: '<button class="btn float-right" id="club-join-btn" data-clubId=' + dbClub.id + '>Join Club</button>'
               });
             } else {
               res.render("club", {

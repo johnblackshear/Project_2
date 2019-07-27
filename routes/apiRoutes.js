@@ -91,11 +91,6 @@ module.exports = function (app) {
   });
   
 
-
-
-
-
-
   // Join a club by id
   app.post('/api/clubs/:id', function (req, res) {
     var userId = req.session.userid;

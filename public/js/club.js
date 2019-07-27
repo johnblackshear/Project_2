@@ -1,6 +1,6 @@
 console.log("HEY");
 
-var $joinButton = $('#join-btn-id');
+var $joinButton = $('#club-join-btn');
 
 // var $clubID = $('')
 var $clubMemberListColumn = $('#club-member-list');
@@ -24,7 +24,7 @@ var API = {
 // // refreshClubs gets new Clubs from the db and repopulates the list
 var refreshClub = function () {
     
-    var idToGet = $joinButton
+    var idToGet = $('#join-btn-id')
         .attr('data-clubid');
     console.log("IDTOGET: ", idToGet);
 
