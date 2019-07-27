@@ -32,12 +32,13 @@ var handleFormSubmit = function (event) {
         return
     }
 
-    API.saveClub(club).then(function () {
+    API.saveClub(club).then(function (newClub) {
         // refreshClubs()
+        window.location.replace('/profile/');
+
     })
 
-    $clubName.val('')
-    $clubDescription.val('')
+
 };
 
 // Add event listener to the submit button
