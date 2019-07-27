@@ -103,3 +103,42 @@ a:hover {
 #add-club a, #add-club a:visited {
   text-decoration: none;
 }
+
+li {
+  margin-bottom: 5px !important;
+}
+
+
+/* USERS PAGE */
+#user-list .field {
+  border-bottom: 1px solid #ccc;
+  width: 20%;
+  float: left;
+  text-align: right;
+  padding: 2px 5px;
+}
+
+#user-list .value {
+  border-bottom: 1px solid #ccc;
+  width: 80%;
+  float: left;
+  padding: 2px 5px;
+}
+
+#user-list .user-list {
+  list-style-type: none;
+  /* border: 1px solid red; */
+}
+
+#user-list button {
+  float: right;
+  margin: 25px auto;
+}
+
+#user-list .odd {
+  border-top: 5px solid #ccc;
+}
+
+#user-list .even {
+
+}

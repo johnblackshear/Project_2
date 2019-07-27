@@ -1,4 +1,3 @@
-
 console.log("HEY");
 
 var $joinButton = $('#club-join-btn');
