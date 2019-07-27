@@ -6,8 +6,12 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     User.associate = function (models) {
-        // Associating User with Clubs
-        User.belongsToMany(models.Club, {through: models.UserClubs});
+        User.hasMany(models.Club, {
+            onDelete: "cascade"
+        });
+
+    User.belongsToMany(models.Club, { as: 'Clubs2', through: { model: models.User_Club, unique: false }, foreignKey: 'user_id' });
+
     };
 
     return User;
