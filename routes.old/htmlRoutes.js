@@ -88,6 +88,7 @@ module.exports = function (app) {
     if (req.session.loggedin) {
       userSession = req.session;
       userSessionName = JSON.stringify(userSession.username);
+
       db.User.findOne({
         where: {
           id: userSession.userid
@@ -103,6 +104,19 @@ module.exports = function (app) {
           email: renderEmail
         });
       });
+      
+      db.User_Club.findAll({
+        where: {
+          user_id: userSession.userid
+        }
+      }).then(function (userClubResult) {
+        var userClubList = JSON.stringify(userClubResult);
+        userClubList = userClubList.replace(/^"(.+(?="$))"$/, '$1');
+        res.render('profile', {
+          clublist: userClubList
+        });
+      });
+
     } else {
       // res.redirect('/login');
       res.render('login', {
@@ -157,7 +171,7 @@ module.exports = function (app) {
     }
   });
 
-/////////////////////////////////////////////////
+  /////////////////////////////////////////////////
 
   // Load clubs page and pass in a club by id
   app.get("/clubs/:id", function (req, res) {
@@ -169,7 +183,7 @@ module.exports = function (app) {
       var userId = req.session.userid;
       console.log("userid", userId);
       console.log("clubId:", clubId);
-      
+
       db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
         var ownerId = dbClub.UserId;
         var clubname = JSON.stringify(dbClub.clubname);
@@ -184,7 +198,7 @@ module.exports = function (app) {
           });
         } else {
           db.UserClubs.count({ where: { ClubId: clubId, UserId: userId } }).then(function (count) {
-            
+
             if (count === 0) {
               res.render("club", {
                 clubname: clubname,
@@ -223,7 +237,7 @@ module.exports = function (app) {
     }
   });
 
-/////////////////////////////////////////////////
+  /////////////////////////////////////////////////
 
   // Books GET route
   app.get("/books", function (req, res) {

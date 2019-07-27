@@ -49,13 +49,13 @@ var refreshClubs = function () {
                 .addClass('btn btn-danger float-right delete')
                 .text('ｘ')
 
-            $li.append($button)
+            // $li.append($button)
 
             var $joinclub = $('<button>')
                 .addClass('btn float-right joinbutton')
                 .text('Join')
 
-            $li.append($joinclub)
+            // $li.append($joinclub)
 
             return $li
         })

@@ -9,8 +9,10 @@ module.exports = function (sequelize, DataTypes) {
         User.hasMany(models.Club, {
             onDelete: "cascade"
         });
+
+    User.belongsToMany(models.Club, { as: 'Members', through: { model: models.User_Club, unique: false }, foreignKey: 'user_id' });
+
     };
 
     return User;
 };
-

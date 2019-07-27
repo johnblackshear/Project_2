@@ -197,24 +197,24 @@ module.exports = function (app) {
         if (ownerId === userId) {
           res.render("club", {
             clubname: clubname,
-            id: 'Club ID: ' + dbClub.id,
+            id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
             description: dbClub.description,
             message: 'You are the owner of this club!'
           });
         } else {
-          db.UserClubs.count({ where: { ClubId: clubId, UserId: userId } }).then(function (count) {
+          db.User_Club.count({ where: { club_id: clubId, user_id: userId } }).then(function (count) {
 
             if (count === 0) {
               res.render("club", {
                 clubname: clubname,
-                id: 'Club ID: ' + dbClub.id,
+                id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
                 description: dbClub.description,
-                message: '<button class="btn float-right join" id="join-btn">Join Club</button>'
+                message: '<button class="btn float-right" data-clubId=' + dbClub.id + '>Join Club</button>'
               });
             } else {
               res.render("club", {
                 clubname: clubname,
-                id: 'Club ID: ' + dbClub.id,
+                id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
                 description: dbClub.description,
                 message: 'You are a member of this club!'
               });
@@ -234,7 +234,7 @@ module.exports = function (app) {
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
         res.render("club", {
           clubname: clubname,
-          id: 'Club ID: ' + dbClub.id,
+          id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
           description: dbClub.description
         });
       });

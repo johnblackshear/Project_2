@@ -5,7 +5,11 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Club.associate = function (models) {
-        Club.belongsTo(models.User)
+        Club.belongsTo(models.User);
+        Club.belongsToMany(models.User, { as: 'Users', through: { model: models.User_Club, unique: false }, foreignKey: 'club_id' });
+
+
+
     };
 
     return Club;
