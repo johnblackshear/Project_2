@@ -21,7 +21,7 @@ app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 
 // Middleware for login
 app.use(session({
-  secret: 'hotPinkTapShoes',
+  secret: 'password',
   resave: true,
   saveUninitialized: true
 }));

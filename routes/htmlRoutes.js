@@ -10,18 +10,28 @@ module.exports = function (app) {
   // Homepage HTMLGET route
   app.get('/', function (req, res) {
     // If the user is logged in
-    if (req.session.loggedin) {
+    // if (req.session.loggedin) {
       userSession = req.session;
       userSessionName = JSON.stringify(userSession.username);
       res.render('index', {
-        msg: 'Welcome ' + userSessionName
+        msg: 'Welcome!',
+        loginstatus: 'You are logged in, ' + userSessionName,
+        session: userSessionName,
+        clubs: [{
+          clubname: 'Dans club ',
+          id: 1
+        }, {
+          clubname: 'Johns club ',
+          id: 2
+        }]
       });
-    } else {
-      // User is not logged in
-      res.render('index', {
-        msg: 'Welcome to our book club app!'
-      });
-    }
+    // } else {
+    //   // User is not logged in
+    //   res.render('index', {
+    //     msg: 'Welcome to Perusal, a book club app',
+    //     loginstatus: 'You are NOT logged in'
+    //   });
+    // }
   });
   //////////////////////////////////////
 
@@ -132,8 +142,22 @@ module.exports = function (app) {
   //////////////////////////////////////
 
 
-  //////////////////////////////////////
-  // Clubs HTML ROUTES
+  // Clubs page GET route
+  app.get('/clubs', function (req, res) {
+    db.Club.findAll({}).then(function (dbClubs) {
+      res.render('clubs', {
+        clubname: dbClubs
+      });
+    });
+  });
+// Clubs page GET route
+app.get('/pop_clubs', function (req, res) {
+  db.Club.findAll({}).then(function (dbClubs) {
+    res.render('clubs', {
+      clubname: dbClubs
+    });
+  });
+});
 
   // Add Club page GET route
   app.get('/addclub', function (req, res) {
