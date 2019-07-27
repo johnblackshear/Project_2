@@ -1,6 +1,6 @@
 console.log("HEY");
 
-var $joinButton = $('.join');
+var $joinButton = $('#join-btn-id');
 
 // var $clubID = $('')
 var $clubMemberListColumn = $('#club-member-list');
@@ -13,12 +13,6 @@ var API = {
             type: 'GET'
         });
     },
-    // getMembers: function (id) {
-    //     return $.ajax({
-    //         url: 'api/clubs/' + id + '/members',
-    //         type: 'GET'
-    //     });
-    // },
     joinClub: function (id) {
         return $.ajax({
             url: '/api/clubs/' + id,

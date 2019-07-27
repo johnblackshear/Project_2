@@ -197,7 +197,7 @@ module.exports = function (app) {
         if (ownerId === userId) {
           res.render("club", {
             clubname: clubname,
-            id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
+            id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
             description: dbClub.description,
             message: 'You are the owner of this club!'
           });
@@ -207,14 +207,14 @@ module.exports = function (app) {
             if (count === 0) {
               res.render("club", {
                 clubname: clubname,
-                id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
+                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
                 description: dbClub.description,
                 message: '<button class="btn float-right" data-clubId=' + dbClub.id + '>Join Club</button>'
               });
             } else {
               res.render("club", {
                 clubname: clubname,
-                id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
+                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
                 description: dbClub.description,
                 message: 'You are a member of this club!'
               });
@@ -234,7 +234,7 @@ module.exports = function (app) {
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
         res.render("club", {
           clubname: clubname,
-          id: 'Club ID: ' + dbClub.id + '<span class=join data-clubid=' + dbClub.id + '>test</span>',
+          id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
           description: dbClub.description
         });
       });
