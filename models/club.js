@@ -7,9 +7,9 @@ module.exports = function (sequelize, DataTypes) {
     Club.associate = function (models) {
         Club.belongsTo(models.User);
         Club.belongsToMany(models.User, { as: 'Users', through: { model: models.User_Club, unique: false }, foreignKey: 'club_id' });
-
-
-
+        Club.hasMany(models.Event, {
+            onDelete: "cascade"
+        });
     };
 
     return Club;
