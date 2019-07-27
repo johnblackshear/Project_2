@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "pinkSparkleUnikitty",
-    "database": "exampledb",
+    "password": "root",
+    "database": "bookclub_db",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
+    "password": "root",
     "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
