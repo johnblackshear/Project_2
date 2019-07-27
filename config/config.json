@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "pinkSparkleUnikitty",
-    "database": "exampledb",
+    "password": "4nn30fGreenGabl3!",
+    "database": "bookclub_db",
     "host": "localhost",
     "dialect": "mysql"
   },
