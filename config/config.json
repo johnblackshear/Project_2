@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "nodeuser",
-    "password": "password",
+    "username": "root",
+    "password": "root",
     "database": "bookclub_db",
     "host": "localhost",
     "dialect": "mysql"
