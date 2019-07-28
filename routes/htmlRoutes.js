@@ -199,7 +199,9 @@ module.exports = function (app) {
             clubname: clubname,
             id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
             description: dbClub.description,
-            message: 'You are the owner of this club!'
+            message: 'You are the owner of this club!',
+            addbutton: '<button class="btn" id="event-add-btn" data-clubId=' + dbClub.id + '>Add Event</button>'
+
           });
         } else {
           db.User_Club.count({ where: { club_id: clubId, user_id: userId } }).then(function (count) {
@@ -264,6 +266,52 @@ module.exports = function (app) {
     });
   });
   //////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Add Event page GET route
+  app.get('/clubs/:id/addevent', function (req, res) {
+    var clubId = req.params.id;
+    console.log("clubId: ", clubId);
+
+    // If the user is logged in
+    if (req.session.loggedin) {
+      var userid = req.session.userid;
+      var username = req.session.username;
+      console.log("clubId: ", clubId);
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var ownerId = dbClub.UserId;
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+
+        if (ownerId === userid) {
+          res.render('addevent', {
+            userid: userid,
+            username: username,
+            message: 'You are the owner of this club!',
+            id: 'Club ID: ' + dbClub.id + '<span class=join id=theClubId data-clubid=' + dbClub.id + '></span>',
+
+
+          });
+        }
+
+      });
+
+    } else {
+      res.redirect('/');
+    }
+
+  });
 
 
 };

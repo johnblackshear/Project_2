@@ -48,7 +48,7 @@ module.exports = function (app) {
   // Get a User's clubs
   app.get('/api/users/:id/clubs', function (req, res) {
     db.User.findAll({
-      include: [db.Club,  {model: db.Club, as: 'Clubs2'} ], 
+      include: [db.Club, { model: db.Club, as: 'Clubs2' }],
       where: { id: req.params.id }
     }).then(function (dbUser) {
       res.json(dbUser);
@@ -98,13 +98,13 @@ module.exports = function (app) {
   // Get a Club by id
   app.get('/api/clubs/:id', function (req, res) {
     db.Club.findOne({
-      include: [db.User,  {model: db.User, as: 'Users'} ], 
+      include: [db.User, { model: db.User, as: 'Users' }],
       where: { id: req.params.id }
     }).then(function (dbClub) {
       res.json(dbClub);
     });
   });
-  
+
 
   // Join a club by id
   app.post('/api/clubs/:id', function (req, res) {
@@ -130,6 +130,24 @@ module.exports = function (app) {
 
 
   ////////////////////////////////////////////////////////
+  // CLUB EVENTS API ROUTES
+
+  // Get a Clubs's events
+  app.get('/api/clubs/:id/events', function (req, res) {
+    db.Event.findAll({
+      where: { ClubId: req.params.id }
+    }).then(function (dbClubEvents) {
+      res.json(dbClubEvents);
+    });
+  });
+
+  // Create an event
+  app.post('/api/clubs/:id/addevent', function (req, res) {
+    db.Event.create(req.body).then(function (newClubEvent) {
+      res.json(newClubEvent);
+    })
+  })
+
 
 
 };
