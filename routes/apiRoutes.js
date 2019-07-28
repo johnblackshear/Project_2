@@ -95,29 +95,54 @@ module.exports = function (app) {
   });
 
 
+  // // Get a Club by id
+  // app.get('/api/clubs/:id', function (req, res) {
+  //   db.Club.findOne({
+  //     include: [{model: db.User, as: 'Users', include: 
+  //     [{model: db.Event}]
+  //   }],
+  //     where: { id: req.params.id }
+  //   }).then(function (dbClub) {
+  //     res.json(dbClub);
+  //   });
+  // });
+
+// ??????????????????????????????????????????????????
+
   // Get a Club by id
   app.get('/api/clubs/:id', function (req, res) {
     db.Club.findOne({
-      include: [db.User, { model: db.User, as: 'Users' }],
+      include: [{model: db.User, as: 'Users'}],
       where: { id: req.params.id }
     }).then(function (dbClub) {
       res.json(dbClub);
     });
   });
 
+//   include: [{model: Tool, as: 'Instruments', include: 
+//       [
+//         { 
+//           model: Teacher, include: [ /* etc */] 
+//         }
+//       ]
+//     }
+//   ]
+//     ??????????????????????????????????????????????????
 
-  // Join a club by id
-  app.post('/api/clubs/:id', function (req, res) {
-    var userId = req.session.userid;
-    var clubId = req.params.id;
-    var userClubInfo = { user_id: userId, club_id: clubId };
-    console.log("HEY TEST");
-    console.log("userId:", userId);
-    console.log("clubId:", clubId);
-    db.User_Club.create(userClubInfo).then(function (dbClub) {
-      res.json(dbClub);
-    });
-  });
+
+
+      // Join a club by id
+      app.post('/api/clubs/:id', function (req, res) {
+        var userId = req.session.userid;
+        var clubId = req.params.id;
+        var userClubInfo = { user_id: userId, club_id: clubId };
+        console.log("HEY TEST");
+        console.log("userId:", userId);
+        console.log("clubId:", clubId);
+        db.User_Club.create(userClubInfo).then(function (dbClub) {
+          res.json(dbClub);
+        });
+      });
 
 
   // // Get a Club Owner
@@ -143,9 +168,9 @@ module.exports = function (app) {
 
   // Create an event
   app.post('/api/clubs/:id/addevent', function (req, res) {
-    var formStuff = req.body;
-    formStuff.ClubId = req.params.id;
-    db.Event.create(formStuff).then(function (newClubEvent) {
+    var newClubInfo = req.body;
+    newClubInfo.ClubId = req.params.id;
+    db.Event.create(newClubInfo).then(function (newClubEvent) {
       res.json(newClubEvent);
     })
   })
