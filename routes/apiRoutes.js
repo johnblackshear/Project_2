@@ -45,7 +45,7 @@ module.exports = function (app) {
 
 
 
-  // Get a User by id
+  // Get a User's clubs
   app.get('/api/users/:id/clubs', function (req, res) {
     db.User.findAll({
       include: [db.Club,  {model: db.Club, as: 'Clubs2'} ], 

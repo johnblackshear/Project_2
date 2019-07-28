@@ -10,22 +10,18 @@ module.exports = function (app) {
   // Homepage HTMLGET route
   app.get('/', function (req, res) {
     // If the user is logged in
-    // if (req.session.loggedin) {
-    userSession = req.session;
-    userSessionName = JSON.stringify(userSession.username);
-    res.render('index', {
-      msg: 'Welcome!',
-      loginstatus: 'You are logged in, ' + userSessionName,
-      session: userSessionName,
-      clubs: [{
-        clubname: 'Dans club ',
-        id: 1
-      }, {
-        clubname: 'Johns club ',
-        id: 2
-      }]
-    });
-
+    if (req.session.loggedin) {
+      userSession = req.session;
+      userSessionName = JSON.stringify(userSession.username);
+      res.render('index', {
+        msg: 'Welcome ' + userSessionName
+      });
+    } else {
+      // User is not logged in
+      res.render('index', {
+        msg: 'Welcome to our book club app!'
+      });
+    }
   });
   //////////////////////////////////////
 
@@ -123,7 +119,7 @@ module.exports = function (app) {
         res.render('profile', {
           username: renderUsername,
           email: renderEmail,
-          clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '>test</span>'
+          clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '></span>'
         });
       });
     } else {
@@ -136,23 +132,8 @@ module.exports = function (app) {
   //////////////////////////////////////
 
 
-  // // Clubs page GET route
-  // app.get('/clubs', function (req, res) {
-  //   db.Club.findAll({}).then(function (dbClubs) {
-  //     res.render('clubs', {
-  //       clubname: dbClubs
-  //     });
-  //   });
-  // });
-
-  // Clubs page GET route
-  app.get('/pop_clubs', function (req, res) {
-    db.Club.findAll({}).then(function (dbClubs) {
-      res.render('clubs', {
-        clubname: dbClubs
-      });
-    });
-  });
+  //////////////////////////////////////
+  // Clubs HTML ROUTES
 
   // Add Club page GET route
   app.get('/addclub', function (req, res) {
@@ -216,7 +197,7 @@ module.exports = function (app) {
         if (ownerId === userId) {
           res.render("club", {
             clubname: clubname,
-            id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+            id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
             description: dbClub.description,
             message: 'You are the owner of this club!'
           });
@@ -226,14 +207,14 @@ module.exports = function (app) {
             if (count === 0) {
               res.render("club", {
                 clubname: clubname,
-                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
                 description: dbClub.description,
-                message: '<button class="btn float-right" id="club-join-btn" data-clubId=' + dbClub.id + '>Join Club</button>'
+                message: '<button class="btn" id="club-join-btn" data-clubId=' + dbClub.id + '>Join Club</button>'
               });
             } else {
               res.render("club", {
                 clubname: clubname,
-                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
                 description: dbClub.description,
                 message: 'You are a member of this club!'
               });
@@ -253,7 +234,7 @@ module.exports = function (app) {
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
         res.render("club", {
           clubname: clubname,
-          id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+          id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
           description: dbClub.description
         });
       });
