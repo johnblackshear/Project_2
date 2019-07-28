@@ -143,7 +143,9 @@ module.exports = function (app) {
 
   // Create an event
   app.post('/api/clubs/:id/addevent', function (req, res) {
-    db.Event.create(req.body).then(function (newClubEvent) {
+    var formStuff = req.body;
+    formStuff.ClubId = req.params.id;
+    db.Event.create(formStuff).then(function (newClubEvent) {
       res.json(newClubEvent);
     })
   })
