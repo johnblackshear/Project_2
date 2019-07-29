@@ -90,7 +90,7 @@ var refreshClub = function () {
 
             var $eventDiv = $('<div class="eventbrief clearfix">');
             var $eventDateDiv = $('<div class="eventdate">');
-            var $eventBookDiv = $('<div class="eventbook"><img src="../../public/images/logo-icon.png"></div>');
+            var $eventBookDiv = $('<div class="eventbook"></div>');
             var $eventDetailDiv = $('<div class="eventdetail">');
 
             var $eventName = data[i].eventname;
@@ -98,9 +98,11 @@ var refreshClub = function () {
             var $location = data[i].location;
             var $book = data[i].book;
 
+            $eventBookDiv.html($book + '<br><img src="../../public/images/logo-icon.png">');
+
             $eventDateDiv.append($day + '<br>' + $monthName + '<br>' + $year + '<br>');
             // $eventBookDiv.append();
-            $eventDetailDiv.append('<h5>' + $eventName + '</h5>' + '<br>' + $book + '<br>' + $location + '<br>' + $description);
+            $eventDetailDiv.append('<h5>' + $eventName + '</h5>' + $description + '<br>' + $location);
 
             $eventDiv.append($eventDateDiv, $eventDetailDiv, $eventBookDiv);
             $clubEventBriefDiv.append($eventDiv);

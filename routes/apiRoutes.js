@@ -160,7 +160,10 @@ module.exports = function (app) {
   // Get a Clubs's events
   app.get('/api/clubs/:id/events', function (req, res) {
     db.Event.findAll({
-      where: { ClubId: req.params.id }
+      where: { ClubId: req.params.id },
+      order: [
+        ['date', 'DESC']
+    ],
     }).then(function (dbClubEvents) {
       res.json(dbClubEvents);
     });
