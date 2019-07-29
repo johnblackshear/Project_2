@@ -4,44 +4,70 @@ var userSession;
 
 module.exports = function (app) {
 
-  // Home page GET route
+  //////////////////////////////////////
+  // HOMEPAGE HTML ROUTES
+
+  // Homepage HTMLGET route
   app.get('/', function (req, res) {
     // If the user is logged in
-    if (req.session.loggedin) {
+    // if (req.session.loggedin) {
       userSession = req.session;
       userSessionName = JSON.stringify(userSession.username);
       res.render('index', {
         msg: 'Welcome!',
         loginstatus: 'You are logged in, ' + userSessionName,
-        session: userSessionName
+        session: userSessionName,
+        clubs: [{
+          clubname: 'Dans club ',
+          id: 1
+        }, {
+          clubname: 'Johns club ',
+          id: 2
+        }]
       });
-    } else {
-      // User is not logged in
-      res.render('index', {
-        msg: 'Welcome to Perusal, a book club app',
-        loginstatus: 'You are NOT logged in'
-      });
-    }
+    // } else {
+    //   // User is not logged in
+    //   res.render('index', {
+    //     msg: 'Welcome to Perusal, a book club app',
+    //     loginstatus: 'You are NOT logged in'
+    //   });
+    // }
   });
+  //////////////////////////////////////
 
 
-  // Register User page GET route
+  //////////////////////////////////////
+  // REGISTER HTML ROUTES
+
+  // Register User HTML GET route
   app.get('/register', function (req, res) {
     // If the user is logged in
     if (req.session.loggedin) {
       res.redirect('/profile');
     } else {
       // User is not logged in
-      db.Example.findAll({}).then(function (dbExample) {
-        res.render('register', {
-          example: dbExample
-        });
-      });
+      res.render('register');
     }
   });
+  //////////////////////////////////////
 
 
-  // Login GET route
+  //////////////////////////////////////
+  // USERS HTML ROUTES
+
+  // Users HTML GET route
+  app.get('/users', function (req, res) {
+    db.User.findAll({}).then(function (dbUsers) {
+      res.render('users');
+    });
+  });
+  //////////////////////////////////////
+
+
+  //////////////////////////////////////
+  // LOGIN HTML ROUTES
+
+  // Login HTML GET route
   app.get("/login", function (req, res) {
     // If the user is logged in
     if (req.session.loggedin) {
@@ -52,8 +78,7 @@ module.exports = function (app) {
     }
   });
 
-
-  // Login POST route
+  // Login HTML POST route
   app.post('/login', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
@@ -65,15 +90,16 @@ module.exports = function (app) {
         }
       }).then(function (results) {
         if (results) {
+          // A matching user record was found.
           req.session.userid = results.id;
           req.session.loggedin = true;
           req.session.username = username;
-          console.log("found user");
           res.redirect('/profile');
         } else {
           // No matching record was found.
-          console.log("no")
-          res.send('No matching user record was found.' + 'Please login to view this page! <br>' + '<a href=/login>login</a><br><a href=/register>register</a>');
+          res.render('login', {
+            msg: 'No matching user record was found. Please log in to view your profile:'
+          });
         }
       });
     } else {
@@ -81,10 +107,13 @@ module.exports = function (app) {
       response.end();
     };
   });
+  //////////////////////////////////////
 
 
-  // Profile page GET route
+  //////////////////////////////////////
+  // Profile HTML GET route
   app.get('/profile', function (req, res) {
+    // If the user is logged in
     if (req.session.loggedin) {
       userSession = req.session;
       userSessionName = JSON.stringify(userSession.username);
@@ -98,18 +127,19 @@ module.exports = function (app) {
         var renderEmail = JSON.stringify(userResult.email);
         renderEmail = renderEmail.replace(/^"(.+(?="$))"$/, '$1');
         res.render('profile', {
-          loginstatus: 'You are logged in, ' + userSessionName,
           username: renderUsername,
-          email: renderEmail
+          email: renderEmail,
+          clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '>test</span>'
         });
       });
     } else {
-      // res.redirect('/login');
+      // User is not logged in
       res.render('login', {
         msg: 'You are not logged in. Please log in to view your profile:'
       });
     }
   });
+  //////////////////////////////////////
 
 
   // Clubs page GET route
@@ -120,7 +150,14 @@ module.exports = function (app) {
       });
     });
   });
-
+// Clubs page GET route
+app.get('/pop_clubs', function (req, res) {
+  db.Club.findAll({}).then(function (dbClubs) {
+    res.render('clubs', {
+      clubname: dbClubs
+    });
+  });
+});
 
   // Add Club page GET route
   app.get('/addclub', function (req, res) {
@@ -130,11 +167,9 @@ module.exports = function (app) {
       console.log("USERID: ", req.session.userid);
       var userid = req.session.userid;
       var username = req.session.username;
-      db.Club.findAll({}).then(function (newclubinfo) {
-        res.render('addclub', {
-          userid: userid,
-          username: username
-        });
+      res.render('addclub', {
+        userid: userid,
+        username: username
       });
     } else {
       // User is not logged in
@@ -144,52 +179,129 @@ module.exports = function (app) {
     }
   });
 
-
-  // Add Club page POST route
-  app.post("/addclub", function (req, res) {
+  // Clubs HTML GET route
+  app.get('/clubs', function (req, res) {
     // If the user is logged in
     if (req.session.loggedin) {
-      db.Club.create(req.body).then(function (dbClub) {
-        res.json(dbClub);
+      db.Club.findAll({}).then(function (dbClubs) {
+        res.render('clubs', {
+          clubname: dbClubs,
+          addclub: '<a href="/addclub" id="add-club">Add a Club</a>'
+        });
       });
     } else {
-      // User is not logged in      
-      res.render('login', {
-        msg: 'You are not logged in. Please log in to create a club:'
+      // User is not logged in
+      db.Club.findAll({}).then(function (dbClubs) {
+        res.render('clubs', {
+          clubname: dbClubs,
+          addclub: ''
+        });
       });
+    };
+  });
+
+
+
+  // Club GET ROUTE
+  app.get("/clubs/:id", function (req, res) {
+    var clubId = req.params.id;
+
+    // If the user is logged in
+    if (req.session.loggedin) {
+
+      var userId = req.session.userid;
+      console.log("userid", userId);
+      console.log("clubId:", clubId);
+
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var ownerId = dbClub.UserId;
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+
+        if (ownerId === userId) {
+          res.render("club", {
+            clubname: clubname,
+            id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+            description: dbClub.description,
+            message: 'You are the owner of this club!'
+          });
+        } else {
+          db.User_Club.count({ where: { club_id: clubId, user_id: userId } }).then(function (count) {
+
+            if (count === 0) {
+              res.render("club", {
+                clubname: clubname,
+                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+                description: dbClub.description,
+                message: '<button class="btn float-right" id="club-join-btn" data-clubId=' + dbClub.id + '>Join Club</button>'
+              });
+            } else {
+              res.render("club", {
+                clubname: clubname,
+                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+                description: dbClub.description,
+                message: 'You are a member of this club!'
+              });
+            }
+
+          });
+        }
+
+      });
+
+    } else {
+
+      console.log("***************** FIND ME *****************************");
+      // User is not logged in
+      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        var clubname = JSON.stringify(dbClub.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+        res.render("club", {
+          clubname: clubname,
+          id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '>test</span>',
+          description: dbClub.description
+        });
+      });
+
     }
   });
+  //////////////////////////////////////
 
 
-  // Load clubs page and pass in a club by id
-  app.get("/clubs/:id", function (req, res) {
-    db.Club.findOne({ where: { id: req.params.id } }).then(function (dbClub) {
-      var clubname = JSON.stringify(dbClub.clubname);
-      clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
-      res.render("club", {
-        clubname: 'Clubname: ' + clubname,
-        id: 'ID: ' + dbClub.id,
-        description: dbClub.description
-      });
-    });
-  });
 
-
-  // Books GET route
+  //////////////////////////////////////
+  // Books HTML GET route
   app.get("/books", function (req, res) {
     res.render('books');
   });
+  //////////////////////////////////////
 
 
-// Logout 
-app.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return console.log(err);
-    }
-    res.redirect('/');
+  //////////////////////////////////////
+  // Top Books HTML GET route
+  app.get("/topbooks", function (req, res) {
+    res.render('topbooks');
   });
-});
+  //////////////////////////////////////
+
+  //////////////////////////////////////
+  // Discussion Guide HTML GET route
+  app.get("/discussionguide", function (req, res) {
+    res.render('discussionguide');
+  });
+  //////////////////////////////////////
+
+  //////////////////////////////////////
+  // Logout 
+  app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return console.log(err);
+      }
+      res.redirect('/');
+    });
+  });
+  //////////////////////////////////////
 
 
 };
