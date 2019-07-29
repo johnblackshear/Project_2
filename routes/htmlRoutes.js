@@ -35,11 +35,20 @@ module.exports = function (app) {
     // }
   });
   //////////////////////////////////////
+<<<<<<< HEAD
+=======
 
+>>>>>>> 72ed1823e07f2e94940ae24bb7766cd2f10bf601
 
   //////////////////////////////////////
   // REGISTER HTML ROUTES
 
+<<<<<<< HEAD
+  //////////////////////////////////////
+  // REGISTER HTML ROUTES
+
+=======
+>>>>>>> 72ed1823e07f2e94940ae24bb7766cd2f10bf601
   // Register User HTML GET route
   app.get('/register', function (req, res) {
     // If the user is logged in
@@ -279,6 +288,7 @@ app.get('/pop_clubs', function (req, res) {
 
 
   //////////////////////////////////////
+<<<<<<< HEAD
   // Logout 
   app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -289,6 +299,32 @@ app.get('/pop_clubs', function (req, res) {
     });
   });
   //////////////////////////////////////
+=======
+  // Top Books HTML GET route
+  app.get("/topbooks", function (req, res) {
+    res.render('topbooks');
+  });
+  //////////////////////////////////////
+
+  //////////////////////////////////////
+  // Discussion Guide HTML GET route
+  app.get("/discussionguide", function (req, res) {
+    res.render('discussionguide');
+  });
+  //////////////////////////////////////
+
+  //////////////////////////////////////
+  // Logout 
+  app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return console.log(err);
+      }
+      res.redirect('/');
+    });
+  });
+  //////////////////////////////////////
+>>>>>>> 72ed1823e07f2e94940ae24bb7766cd2f10bf601
 
 
 };
