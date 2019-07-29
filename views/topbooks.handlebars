@@ -1,10 +1,48 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Top Books</h1>            
+<div class="featured-boos-container">
+    <div class="feattured-boks-content">
+        <div class="banner-container fixed-banner featured-books-banner">
+            <div class="slider-item">
+                <img class="image" src="../../public/images/banner.png" alt="">
+            </div>  
+            <div class="intro">
+                <h2 class="banner-title">Top Books</h2>
+            </div>
         </div>
     </div>
 </div>
 
+<style>
+
+    .featured-books-banner{
+        min-height: 250px;
+        max-height: 385px;
+    }
+
+    .banner-container{
+        position: relative;
+    }
+
+    .fixed-banner .image{
+        opacity: .7;
+        width: 100%;
+    }
+
+    .banner-container .intro{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        transform: translateY(-50%);
+    }
+
+    .fixed-banner .intro .banner-title {
+    font-size: 2.8125rem;
+    font-weight: 500;
+    line-height: 3.9375rem;
+    letter-spacing: 3.4px;
+    text-transform: uppercase;
+    }
+</style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {{!-- <script src="/js/club.js"></script> --}}
