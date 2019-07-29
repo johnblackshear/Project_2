@@ -4,21 +4,41 @@
             <div class="card mt-4">
                 <div class="card-body">
                     <h5 class="card-title">Make Event</h5>{{{id}}}
-                    <div class="user-info">Username: {{username}}&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;User ID: {{userid}}<br>{{message}}<br></div>
+                    <div class="user-info">Username: {{username}}&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;User ID:
+                        {{userid}}<br>{{message}}<br><br></div>
                     <form class="clearfix mb-4" action="POST">
                         <div class="form-group">
-                            <label for="newevent-eventname">event Name</label>
+                            <label for="newevent-eventname">Event Name:</label>
                             <input type="text" id="newevent-eventname" class="form-control"
                                 aria-describedby="newevent-eventname" placeholder="Enter event name">
                         </div>
                         <div class="form-group">
-                            <label for="newevent-description">description</label>
+                            <label for="newevent-description">Description:</label>
                             <input type="text" id="newevent-description" class="form-control"
                                 aria-describedby="newevent-description" placeholder="Enter description">
                         </div>
+                        <div class="form-group">
+                            <label for="newevent-date">Date:</label>
+                            <input type="text" id="newevent-date" class="form-control" aria-describedby="newevent-date"
+                                placeholder="Enter date">
+                        </div>
+                        <div class="form-group">
+                            <label for="newevent-time">Time:</label>
+                            <input type="text" id="newevent-time" class="form-control" aria-describedby="newevent-time"
+                                placeholder="Enter time">
+                        </div>
+                        <div class="form-group">
+                            <label for="newevent-book">Book:</label>
+                            <input type="text" id="newevent-book" class="form-control" aria-describedby="newevent-book"
+                                placeholder="Enter book">
+                        </div>
+                        <div class="form-group">
+                            <label for="newevent-location">Location:</label>
+                            <input type="text" id="newevent-location" class="form-control"
+                                aria-describedby="newevent-location" placeholder="Enter location">
+                        </div>
                         <button id="submit" class="btn btn-primary float-right">Submit</button>
                     </form>
-
                 </div>
             </div>
         </div>

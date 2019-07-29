@@ -146,3 +146,10 @@ li {
 #user-list .even {
 
 }
+
+.eventbrief {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  padding: 20px;
+}

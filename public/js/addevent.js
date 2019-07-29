@@ -8,6 +8,12 @@ var theClubId = $('#theClubId').attr('data-clubid');
 
 console.log("theClubId: ", theClubId);
 
+// var flatpickr = require('flatpickr');
+flatpickr("#newevent-date", {dateFormat: 'M-d-Y'});
+flatpickr("#newevent-time", {noCalendar: true, enableTime: true});
+
+
+
 // The API object contains methods for each kind of request we'll make
 var API = {
     saveEvent: function (event) {
