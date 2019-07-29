@@ -41,7 +41,7 @@ var API = {
     }
 };
 
-// // refreshClubs gets new Clubs from the db and repopulates the list
+// // refreshClub gets new info from the db and repopulates the list
 var refreshClub = function () {
 
     API.getClub(idToGet).then(function (data) {
@@ -68,17 +68,41 @@ var refreshClub = function () {
         $li.append($a);
         $ownerDiv.append($li);
     });
-
+    // THIS CODE DISPLAYS EVENTS ON THE CLUB MAIN PAGE
     API.getClubEvents(idToGet).then(function (data) {
         console.log("Events: ", data);
 
         for (var i = 0; i < data.length; i++) {
             console.log("data[i]", data[i]);
-            var $eventDiv = $('<div class="eventbrief">')
+
+            var $date = data[i].date;
+            console.log("date: ", $date);
+            var $year = $date.substring(0, 4);
+            console.log("year: ", $year);
+            var $month = $date.substring(5, 7);
+            var $montharray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+            $month = $month - 1;
+            console.log("month: ", $month);
+            var $monthName = $montharray[$month];
+            console.log("monthName: ", $monthName);
+            var $day = $date.substring(8, 10);
+            console.log("day: ", $day);
+
+            var $eventDiv = $('<div class="eventbrief clearfix">');
+            var $eventDateDiv = $('<div class="eventdate">');
+            var $eventBookDiv = $('<div class="eventbook"><img src="../../public/images/logo-icon.png"></div>');
+            var $eventDetailDiv = $('<div class="eventdetail">');
+
             var $eventName = data[i].eventname;
             var $description = data[i].description;
+            var $location = data[i].location;
+            var $book = data[i].book;
 
-            $eventDiv.append($eventName, '<br>', $description);
+            $eventDateDiv.append($day + '<br>' + $monthName + '<br>' + $year + '<br>');
+            // $eventBookDiv.append();
+            $eventDetailDiv.append($eventName + '<br>' + $location + '<br>' + $description);
+
+            $eventDiv.append($eventDateDiv, $eventDetailDiv, $eventBookDiv);
             $clubEventBriefDiv.append($eventDiv);
         }
     });
