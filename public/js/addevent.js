@@ -62,14 +62,14 @@ var handleFormSubmit = function (event) {
     //     return
     // }
 
-    // API.saveEvent(clubevent).then(function (newevent) {
-    //     var $div = $('.card-body');
-    //     console.log("test2", newevent);
-    //     // refreshevents()
-    //     // window.location.replace('/clubs/' + theClubId);
-    //     $div.empty();
-    //     $div.append("hi");
-    // })
+    API.saveEvent(clubevent).then(function (newevent) {
+        var $div = $('.card-body');
+        console.log("test2", newevent);
+        // refreshevents()
+        // window.location.replace('/clubs/' + theClubId);
+        $div.empty();
+        $div.append(newevent);
+    })
 
 };
 

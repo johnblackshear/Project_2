@@ -100,7 +100,7 @@ var refreshClub = function () {
 
             $eventDateDiv.append($day + '<br>' + $monthName + '<br>' + $year + '<br>');
             // $eventBookDiv.append();
-            $eventDetailDiv.append($eventName + '<br>' + $location + '<br>' + $description);
+            $eventDetailDiv.append('<h5>' + $eventName + '</h5>' + '<br>' + $book + '<br>' + $location + '<br>' + $description);
 
             $eventDiv.append($eventDateDiv, $eventDetailDiv, $eventBookDiv);
             $clubEventBriefDiv.append($eventDiv);
