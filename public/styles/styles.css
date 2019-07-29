@@ -148,7 +148,8 @@ li {
 }
 
 .eventbrief {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  background: #f3f3f3;
   border-radius: 12px;
   margin-bottom: 15px;
   padding: 20px;
