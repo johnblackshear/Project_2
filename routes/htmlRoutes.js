@@ -255,6 +255,22 @@ module.exports = function (app) {
   //////////////////////////////////////
 
 
+    //////////////////////////////////////
+  // Books HTML GET route
+  app.get("/topbooks", function (req, res) {
+    res.render('topbooks');
+  });
+  //////////////////////////////////////
+
+
+    //////////////////////////////////////
+  // Books HTML GET route
+  app.get("/discussionguide", function (req, res) {
+    res.render('discussionguide');
+  });
+  //////////////////////////////////////
+
+
   //////////////////////////////////////
   // Logout 
   app.get('/logout', (req, res) => {
