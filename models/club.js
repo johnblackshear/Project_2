@@ -1,3 +1,5 @@
+
+
 module.exports = function (sequelize, DataTypes) {
     var Club = sequelize.define('Club', {
         clubName: DataTypes.STRING,
@@ -32,4 +34,6 @@ module.exports = function (sequelize, DataTypes) {
 //     };
 
 //     return Club;
+
+
 
