@@ -2,37 +2,13 @@
     <div class="feattured-boks-content">
         <div class="banner-container fixed-banner featured-books-banner">
             <div class="slider-item">
-                <img class="image" src="images/books-banner.jpg" alt="books">
+                <img class="image" src="images/books.jpg" alt="books">
             </div>  
             <div class="intro">
-                <h2 class="banner-title">Top Books</h2>
+                <h2 class="banner-title">Bood </h2>
             </div>
         </div>
-        <div class="center">
-            <div class="wrap-content-top-book">
-                <h1 class="featureed-books-title">Recommended Books</h1>
-            </div>
-            <div class="book-list-contect">
-                <ul class="list">
-                    <li class="item">
-                        <div class="column" style="width: 100px">
-                            <span class="order-number">
-                                "1"
-                                "."
-                            </span>
-                        </div>
-                        <div class="column" style="width:188px">
-                            <a href="">
-                            </a>
-                        </div>
-                        <div class="column" style="width:100%">
-                            <div class="content">
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        
     </div>
 </div>
 
@@ -95,5 +71,71 @@
 
 
 </style>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{{!-- <script src="/js/club.js"></script> --}}
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script  src="js/topbooks.js"></script>
+<script>
+     <script>
+      // Load and register pre-caching Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('service-worker.js', {
+            scope: '/',
+          });
+        });
+      }
+      // Redux assumes `process.env.NODE_ENV` exists in the ES module build.
+      // https://github.com/reactjs/redux/issues/2907
+      window.process = { env: { NODE_ENV: 'production' } };
+      // Subset of fetch polyfill for IE11 (supports GET requests for JSON only).
+      window.fetch = window.fetch || function(url) {
+        return new Promise(function(resolve, reject) {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+            resolve({
+              json: function() {
+                return Promise.resolve(JSON.parse(xhr.responseText));
+              }
+            });
+          };
+          xhr.open('GET', url);
+          xhr.send();
+        })
+      }
+    </script>
+
+    <!-- Add any global styles for body, document, etc. -->
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: #fafafa;
+        -webkit-font-smoothing: antialiased;
+      }
+      book-app[unresolved] {
+        display: block;
+        min-height: 101vh;
+        line-height: 66px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        padding: 0 16px;
+        overflow: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <book-app appTitle="BOOKS" unresolved>BOOKS</book-app>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <!-- Built with love using PWA Starter Kit -->
+    <script type="module" src="src/components/book-app.js"></script>
+</script>
+

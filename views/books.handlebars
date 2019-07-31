@@ -1,10 +1,26 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Books and API search</h1>            
+<div class="featured-boos-container">
+    <div class="feattured-boks-content">
+        <div class="banner-container fixed-banner featured-books-banner">
+            <div class="slider-item">
+                <img class="image" src="images/books.jpg" alt="books">
+            </div>  
+            <div class="intro">
+                <h2 class="banner-title">Book Finder</h2>
+            </div>
+            <div>
+                <input id="search" placeholder="Title or Author">
+                <button id="button" type="button">SUBMIT</button>
+            </div>
+            <div id="results"></div>
         </div>
-    </div>
+           </div>
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{{!-- <script src="/js/club.js"></script> --}}
+<script>
+    function bookSearch(){
+        console.log("this fuction runs")
+    }
+
+    document.getElementById("button").addEventListener("click", bookSearch, false)
+</script>
