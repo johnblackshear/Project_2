@@ -45,10 +45,10 @@ module.exports = function (app) {
 
 
 
-  // Get a User by id
+  // Get a User's clubs
   app.get('/api/users/:id/clubs', function (req, res) {
     db.User.findAll({
-      include: [db.Club,  {model: db.Club, as: 'Clubs2'} ], 
+      include: [db.Club, { model: db.Club, as: 'Clubs2' }],
       where: { id: req.params.id }
     }).then(function (dbUser) {
       res.json(dbUser);
@@ -95,29 +95,54 @@ module.exports = function (app) {
   });
 
 
+  // // Get a Club by id
+  // app.get('/api/clubs/:id', function (req, res) {
+  //   db.Club.findOne({
+  //     include: [{model: db.User, as: 'Users', include: 
+  //     [{model: db.Event}]
+  //   }],
+  //     where: { id: req.params.id }
+  //   }).then(function (dbClub) {
+  //     res.json(dbClub);
+  //   });
+  // });
+
+// ??????????????????????????????????????????????????
+
   // Get a Club by id
   app.get('/api/clubs/:id', function (req, res) {
     db.Club.findOne({
-      include: [db.User,  {model: db.User, as: 'Users'} ], 
+      include: [{model: db.User, as: 'Users'}],
       where: { id: req.params.id }
     }).then(function (dbClub) {
       res.json(dbClub);
     });
   });
-  
 
-  // Join a club by id
-  app.post('/api/clubs/:id', function (req, res) {
-    var userId = req.session.userid;
-    var clubId = req.params.id;
-    var userClubInfo = { user_id: userId, club_id: clubId };
-    console.log("HEY TEST");
-    console.log("userId:", userId);
-    console.log("clubId:", clubId);
-    db.User_Club.create(userClubInfo).then(function (dbClub) {
-      res.json(dbClub);
-    });
-  });
+//   include: [{model: Tool, as: 'Instruments', include: 
+//       [
+//         { 
+//           model: Teacher, include: [ /* etc */] 
+//         }
+//       ]
+//     }
+//   ]
+//     ??????????????????????????????????????????????????
+
+
+
+      // Join a club by id
+      app.post('/api/clubs/:id', function (req, res) {
+        var userId = req.session.userid;
+        var clubId = req.params.id;
+        var userClubInfo = { user_id: userId, club_id: clubId };
+        console.log("HEY TEST");
+        console.log("userId:", userId);
+        console.log("clubId:", clubId);
+        db.User_Club.create(userClubInfo).then(function (dbClub) {
+          res.json(dbClub);
+        });
+      });
 
 
   // // Get a Club Owner
@@ -130,6 +155,30 @@ module.exports = function (app) {
 
 
   ////////////////////////////////////////////////////////
+  // CLUB EVENTS API ROUTES
+
+  // Get a Clubs's events
+  app.get('/api/clubs/:id/events', function (req, res) {
+    db.Event.findAll({
+      where: { ClubId: req.params.id },
+      order: [
+        ['date', 'DESC']
+    ],
+    }).then(function (dbClubEvents) {
+      res.json(dbClubEvents);
+    });
+  });
+
+  // Create an event
+  app.post('/api/clubs/:id/addevent', function (req, res) {
+    var newEventInfo = req.body;
+    newEventInfo.ClubId = req.params.id;
+    console.log("newEventInfo: ", newEventInfo);
+    db.Event.create(newEventInfo).then(function (newClubEvent) {
+      res.json(newClubEvent);
+    })
+  })
+
 
 
 };

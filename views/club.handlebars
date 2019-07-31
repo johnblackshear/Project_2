@@ -1,17 +1,30 @@
-<div class="container">
+<link rel="stylesheet" href="/styles/club.css" media="screen" title="no title" charset="utf-8">
+
+<div class="container" id="clubwrapper">
     <div class="row">
-        <div class="col-9">
-            <h1>{{clubname}}</h1>
-            {{{id}}}
-            <br>
-            {{description}}
-            <br>
-            {{{message}}}
+        <div class="col-3" id="leftnav">
+            <span class="top"><br>{{{message}}}</span>
+            <br><br>
+            <h4>{{clubname}}</h4>
+            <span class="top">{{{id}}}</span><br><br>
+
+            Owner: <div id="owner"></div><br>
+
+            Members: <span id="members"></span><br>
+            <div id="club-member-list"></div><br>
+
+
+
         </div>
-        <div class="col-3">
-            <h5>Club Members:</h5>
-            <div id="club-member-list"></div>
-            </div>
+        <div class="col-9">
+            {{{addbutton}}}
+            <br><br>
+            Upcoming Events:<br><br>
+            <div id="club-event-brief"></div>
+            {{!-- <h5>Club Members:</h5> --}}
+            <br><br>
+
+        </div>
     </div>
 </div>
 

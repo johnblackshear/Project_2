@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
-        userName: DataTypes.STRING,
+        username: DataTypes.STRING,
         password: DataTypes.STRING,
         email: DataTypes.STRING,
         profilePic: { type: DataTypes.STRING, defaultValue: "/profile_pic.jpg"},
