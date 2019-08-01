@@ -133,3 +133,4 @@ refreshClub();
 
 $joinButton.on('click', handleJoinBtnClick);
 $addEventButton.on('click', handleAddEventBtnClick);
+
