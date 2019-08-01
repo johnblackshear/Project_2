@@ -11,34 +11,24 @@ module.exports = function (app) {
 
   // Homepage HTMLGET route
   app.get('/', function (req, res) {
+
+    console.log('I AM HERE ======')
     //If the user is logged in
-     if (req.session.loggedin) {
-      var clubs = req.body.clubName;
+    //  if (req.session.loggedin) {
       userSession = req.session;
       userSessionName = JSON.stringify(userSession.username);
-      res.render('index', {
-        msg: 'Welcome!',
-        loginstatus: 'You are logged in, ' + userSessionName,
-        session: userSessionName,
-        
-        
-      //   clubs: [{
-      //     clubname: 'Johns club ',
-      //     id: 2
-      //   }, {
-      //      clubname: 'Johns club ',
-      //      id: 2
-      //   }]
-        
-       });
-     } else {
-       // User is not logged in
-       res.render('index', {
-         msg: 'Welcome to Perusal, a book club app',
-        loginstatus: 'You are NOT logged in'
-       });
-     }
-  });
+      // db === database find all from club model
+      db.Club.findAll({}).then(function(result){
+        // console.log('result++++++', result)
+        //get response and put into index handelbars
+        res.render('index', {
+          // clubs is the key 
+          clubs: result
+        })
+
+      })
+  // }
+});
   //////////////////////////////////////
 
 
@@ -299,12 +289,14 @@ app.get('/pop_clubs', function (req, res) {
     var {term} = req.query;
     term = term.toLowerCase();
 
-    db.Club.findAll({where: { clubname: { [Op.like]: '%' + term + '%'  } } })
-      .then(function(dbClubs){
-        res.render('clubs', {dbClubs:clubName});
-      })
-      .catch( err => console.log(err));
-
-  });
-
+    db.Club.findAll({where: { clubName: { [Op.like]: '%' + term + '%'   } } })
+    .then( res.render('index', {
+      clubs: result
+    })
+    .catch(err => console.log(err))
+      )
+    })
 };
+
+
+  

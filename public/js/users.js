@@ -1,4 +1,4 @@
-console.log("HEY");
+console.log("HEY"); 
 
 var $userList = $('#user-list');
 

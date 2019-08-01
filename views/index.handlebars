@@ -27,10 +27,11 @@
     <div class="col-md-6">
       <h3 class="text-center">Popular Clubs</h3>
         <div>
-          
+          {{log clubs}}
+          {{!-- data from the routes --}}
           {{#each clubs}}
             <div class="row">
-              <a href="/{{this.clubname}}">{{this.clubname}}</a>
+              <a href="/{{this.clubName}}">{{this.clubName}}</a>
             </div>
           {{/each}}
         </div>

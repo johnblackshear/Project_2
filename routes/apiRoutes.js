@@ -20,6 +20,7 @@ module.exports = function (app) {
     db.User.findAll({
       include: [db.Club]
     }).then(function (dbUser) {
+      console.log('dbUser', dbUser)
       res.json(dbUser);
     });
   });
@@ -130,6 +131,30 @@ module.exports = function (app) {
 
 
   ////////////////////////////////////////////////////////
+ // Get a Clubs's events
+ app.get('/api/clubs/:id/events', function (req, res) {
+  db.Event.findAll({
+    where: { ClubId: req.params.id },
+    order: [
+      ['date', 'DESC']
+  ],
+  }).then(function (dbClubEvents) {
+    res.json(dbClubEvents);
+  });
+});
+
+// Create an event
+app.post('/api/clubs/:id/addevent', function (req, res) {
+  var newEventInfo = req.body;
+  newEventInfo.ClubId = req.params.id;
+  console.log("newEventInfo: ", newEventInfo);
+  db.Event.create(newEventInfo).then(function (newClubEvent) {
+    res.json(newClubEvent);
+  })
+})
+
 
 
 };
+
+
