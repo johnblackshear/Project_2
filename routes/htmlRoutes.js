@@ -116,10 +116,13 @@ module.exports = function (app) {
         renderUsername = renderUsername.replace(/^"(.+(?="$))"$/, '$1');
         var renderEmail = JSON.stringify(userResult.email);
         renderEmail = renderEmail.replace(/^"(.+(?="$))"$/, '$1');
+        var profilePic = '<img src="'+ userResult.profilePic +'" alt="Profile Picture" width="150" height="150">';
+
         res.render('profile', {
           username: renderUsername,
           email: renderEmail,
-          clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '></span>'
+          clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '></span>',
+          profilePic: profilePic
         });
       });
     } else {

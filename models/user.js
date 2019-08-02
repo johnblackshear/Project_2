@@ -3,7 +3,7 @@ module.exports = function (sequelize, DataTypes) {
         username: DataTypes.STRING,
         password: DataTypes.STRING,
         email: DataTypes.STRING,
-        profilePic: { type: DataTypes.STRING, defaultValue: "/profile_pic.jpg"},
+        profilePic: { type: DataTypes.STRING, defaultValue: "../../public/images/profile_pic.jpg"},
         updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
         createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     });
