@@ -280,20 +280,6 @@ app.get('/pop_clubs', function (req, res) {
 
 
   //////////////////////////////////////
-  // Top Books HTML GET route
-  app.get("/topbooks", function (req, res) {
-    res.render('topbooks');
-  });
-  //////////////////////////////////////
-
-  //////////////////////////////////////
-  // Discussion Guide HTML GET route
-  app.get("/discussionguide", function (req, res) {
-    res.render('discussionguide');
-  });
-  //////////////////////////////////////
-
-  //////////////////////////////////////
   // Logout 
   app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
