@@ -14,7 +14,7 @@ module.exports = function (app) {
 
   //Update a user's profile
   app.post('/api/edit', function (req, res){
-    db.User.update().then(function (dbUser) {
+    db.User.update(req.body).then(function (dbUser) {
         res.json(dbUser);
     });
 
@@ -63,15 +63,7 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
-  // Get the number of a User's clubs
-  app.get('/api/users/:id/clubs', function (req, res) {
-    db.User.count({
-      include: [db.Club, { model: db.Club, as: 'Clubs2' }],
-      where: { id: req.params.id }
-    }).then(function (count) {
-      res.json(count);
-    });
-  });
+  
 
 
 

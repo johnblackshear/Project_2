@@ -1,3 +1,6 @@
+
+
+
 console.log("HI PROFILE PAGE");
 
 var $clubList = $('#club-list');
@@ -28,6 +31,12 @@ var refreshClub = function () {
     console.log("IDTOGET: ", idToGet);
 
     API.getClubs(idToGet).then(function (data) {
+        var county = data[0].Clubs2.length;
+        if(!county === 1){
+            county = county + " book clubs"
+        }else {
+            county = county + " book club"
+        };
         console.log("YO DATA: ", data);
         var $clubs = data[0].Clubs2.map(function (club) {
             var $a = $('<a>')
@@ -42,14 +51,12 @@ var refreshClub = function () {
                 })
                 .append($a)
             return $li
-        })
+        });
         $clubList.empty();
         $clubList.append($clubs);
+        $(".count").append(county);
     });
-    API.getClubCount(idToGet).then(function (count){
-        $(".count").append(count);
-        console.log("THIS COUNTED", count);
-    });
+
 };
 
 
