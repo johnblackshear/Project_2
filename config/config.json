@@ -1,13 +1,17 @@
 {
   "development": {
     "username": "root",
+<<<<<<< HEAD
     "password": "4nn30fGreenGabl3!",
+=======
+    "password": "pinkSparkleUnikitty",
+>>>>>>> 6775821f1c97d9d86fc1b2cb0a9919a387df3db5
     "database": "bookclub_db",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
+    "username": "nodeuser",
     "password": null,
     "database": "testdb",
     "host": "localhost",

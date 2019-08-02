@@ -6,7 +6,11 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
+<<<<<<< HEAD
     "e": "0.0.4",
+=======
+    "eslint": "^6.1.0",
+>>>>>>> 6775821f1c97d9d86fc1b2cb0a9919a387df3db5
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.2",
@@ -18,7 +22,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {

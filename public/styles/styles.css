@@ -1,3 +1,7 @@
+body {
+  font-family: roboto;
+}
+
 a, a:visited {
   color: #539092;
 }
@@ -120,3 +124,79 @@ a:hover {
   text-decoration: none;
 }
 
+<<<<<<< HEAD
+=======
+li {
+  margin-bottom: 5px !important;
+}
+
+
+/* USERS PAGE */
+#user-list .field {
+  border-bottom: 1px solid #ccc;
+  width: 20%;
+  float: left;
+  text-align: right;
+  padding: 2px 5px;
+}
+
+#user-list .value {
+  border-bottom: 1px solid #ccc;
+  width: 80%;
+  float: left;
+  padding: 2px 5px;
+}
+
+#user-list .user-list {
+  list-style-type: none;
+  /* border: 1px solid red; */
+}
+
+#user-list button {
+  float: right;
+  margin: 25px auto;
+}
+
+#user-list .odd {
+  border-top: 5px solid #ccc;
+}
+
+#user-list .even {
+
+}
+
+.eventbrief {
+  /* border: 1px solid #ccc; */
+  background: #f3f3f3;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  padding: 20px;
+}
+
+.eventdate {
+  /* border: 1px solid #ccc; */
+  border-radius: 12px;
+  /* margin-bottom: 15px; */
+  padding: 10px;
+  width: 10%;
+  float: left;
+}
+
+.eventbook {
+  /* border: 1px solid #ccc; */
+  border-radius: 12px;
+  /* margin-bottom: 15px; */
+  padding: 10px;
+  width: 20%;
+  float: left;
+}
+
+.eventdetail {
+  /* border: 1px solid #ccc; */
+  border-radius: 12px;
+  /* margin-bottom: 15px; */
+  padding: 10px;
+  width: 70%;
+  float: left;
+}
+>>>>>>> 6775821f1c97d9d86fc1b2cb0a9919a387df3db5

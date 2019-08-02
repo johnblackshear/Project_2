@@ -1,0 +1,26 @@
+div#clubwrapper {
+    border: 1px solid#ccc;
+}
+
+#leftnav {
+    background: #f7f2ee;
+}
+
+.top {
+    font-size: 12px;
+}
+
+.memberlist {
+    list-style-type: none;
+    /* border: 1px solid #ccc; */
+    padding: 0px 10px 0px 0px;
+}
+
+#club-join-btn {
+    background: #539092 !important;
+    color: #fff;
+}
+
+#club-join-btn:hover {
+    background: #0a5b5e !important;
+}

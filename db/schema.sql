@@ -2,3 +2,5 @@
 DROP DATABASE IF EXISTS bookclub_db;
 -- Creates the "bookclub_db" database --
 CREATE DATABASE bookclub_db;
+
+USE bookclub_db;

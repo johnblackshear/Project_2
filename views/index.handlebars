@@ -2,15 +2,45 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h1>This is the Book Club App Home Page!</h1>
+        <h1>Discover the Club that fits you</h1>
         <h2>Welcome to our app</h2>
         <p>Lorum Ipsum</p>
         <br><br>
         <br><br>
       </div>
     </div>
+  <div class="row">
+      <!-- Search form -->
+      <div class="col-md 8">
+      <form class="form-inline ">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input class="form-control form-control-md ml-8 w-100" type="text" placeholder="Search Clubs eg.. Titles, Genres, Authors, "
+          aria-label="Search">
+      </form>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="text-center">Popular Clubs</h3>
+        <div>
+          
+          {{#each clubs}}
+            <div class="row">
+              <a href="/{{this.clubname}}">{{this.clubname}}</a>
+            </div>
+          {{/each}}
+        </div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="text-center">Recently Published Clubs</h3>
+    </div>
+  </div>
   </div>
 </div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+{{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
+{{!-- <script src="/js/index.js"></script> --}}

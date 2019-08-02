@@ -1,17 +1,46 @@
-<div id="home">
+<div id="profile">
     <div class="container">
+
+                <h1>Welcome {{username}}!</h1>
         <div class="row">
-            <div class="col">
-                <h1>Profile</h1>
-                Welcome {{username}}
+            <div class="col-md-3">
+                <div class="profilePic">{{{profilePic}}}</div>
+            </div>
+            <div class="col-md-9">
+                
+                Email: {{email}}
                 <br>
-                Your Email: {{email}}
+                Location: {{location}}
+            </div>
+            
+        </div>
+        <div class = "row">
+            <div class = "col">
+                <h1>Member of {{count}} book clubs</h1>
+                Clubs: {{{clublist}}}
+
+            </div>
+        </div>
+            <div class = "row">
+            <div class = "col">
+                <h1>Favorites:</h1>
+                Genres: 
                 <br>
-                Test string: {{teststring}}
+                Authors: 
+                <br>
+                Books:
+                <br>
             </div>
         </div>
     </div>
 </div>
+</div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{{!-- <script src="/js/profile.js"></script> --}}
+<script src="/js/profile.js"></script>
+
+<style>
+.profilePic {
+border: solid black 3px;
+}
+</style>
