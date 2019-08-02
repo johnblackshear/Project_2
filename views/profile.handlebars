@@ -4,7 +4,7 @@
                 <h1>Welcome {{username}}!</h1>
         <div class="row">
             <div class="col-md-3">
-                {{profilePic}}
+                <div class="profilePic">{{{profilePic}}}</div>
             </div>
             <div class="col-md-9">
                 
@@ -38,3 +38,9 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/profile.js"></script>
+
+<style>
+.profilePic {
+border: solid black 3px;
+}
+</style>
