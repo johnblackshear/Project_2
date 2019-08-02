@@ -63,7 +63,15 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
-
+  // Get the number of a User's clubs
+  app.get('/api/users/:id/clubs', function (req, res) {
+    db.User.count({
+      include: [db.Club, { model: db.Club, as: 'Clubs2' }],
+      where: { id: req.params.id }
+    }).then(function (count) {
+      res.json(count);
+    });
+  });
 
 
 

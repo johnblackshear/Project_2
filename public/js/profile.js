@@ -6,7 +6,13 @@ var $clubList = $('#club-list');
 var API = {
     getClubs: function (id) {
         return $.ajax({
-            url: 'api/users' + id + '/clubs',
+            url: 'api/users/' + id + '/clubs',
+            type: 'GET'
+        });
+    },
+    getClubCount: function (id) {
+        return $.ajax({
+            url: 'api/users/' + id + '/clubs',
             type: 'GET'
         });
     }
@@ -39,6 +45,10 @@ var refreshClub = function () {
         })
         $clubList.empty();
         $clubList.append($clubs);
+    });
+    API.getClubCount(idToGet).then(function (count){
+        $(".count").append(count);
+        console.log("THIS COUNTED", count);
     });
 };
 
