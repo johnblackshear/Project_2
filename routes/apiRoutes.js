@@ -12,6 +12,15 @@ module.exports = function (app) {
     });
   });
 
+  //Update a user's profile
+  app.post('/api/edit', function (req, res){
+    db.User.update().then(function (dbUser) {
+        res.json(dbUser);
+    });
+
+  });
+
+
   // Get All Users
   app.get("/api/users", function (req, res) {
     // Here we add an "include" property to our options in our findAll query

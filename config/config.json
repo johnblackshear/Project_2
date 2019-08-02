@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "pinkSparkleUnikitty",
+    "password": "root",
     "database": "bookclub_db",
     "host": "localhost",
     "dialect": "mysql"

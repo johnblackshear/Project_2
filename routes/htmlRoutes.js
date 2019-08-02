@@ -256,7 +256,10 @@ module.exports = function (app) {
     res.render('books');
   });
   //////////////////////////////////////
-
+// Edit Profile 
+  app.get("/edit", function(req, res) {
+    res.render('edit');
+  });
 
   //////////////////////////////////////
   // Logout 
