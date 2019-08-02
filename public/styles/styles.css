@@ -60,6 +60,16 @@ a:hover {
   float: right;
 }
 
+.navbar-brand {
+  display: inline-block;
+  padding-top: .3125rem;
+  padding-bottom: .3125rem;
+  margin-right: 1rem;
+  font-size: 2rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
 .nav a, .nav a:visited {
   /* border-left: 1px solid #e7e7e7; */
   height: 75px;
