@@ -1,4 +1,3 @@
-
 <div class="featured-boos-container">
     <div class="feattured-boks-content">
         <div class="banner-container fixed-banner featured-books-banner">
@@ -26,8 +25,7 @@
         font-weight: 400;
         color: #333;
         -webkit-font-smoothing: antialiased;
-        text-align: center;
-    }
+        }
 
     ​ .image {
         width: 100%;
@@ -40,7 +38,8 @@
     }
 
     ​ #results {
-        text-align: left;
+        text-align: left !important;
+        margin: 40px !important;
     }
 
     ​ .bookdiv {
@@ -52,7 +51,14 @@
 
     ​ .book-cover {
         float: left;
-        margin: 0 20px 0 0;
+        margin: 0 30px;
+    }
+
+
+
+    .intro,
+    .searchBar {
+        text-align: center;
     }
 </style>
 
@@ -77,10 +83,11 @@
             //create for loop
             success: function (data) {
                 for (i = 0; i < data.items.length; i++) {
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "<h5>";
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.authors + "<h5>";
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.publishedDate + "<h5>";
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.description + "<h5>";
+                    results.innerHTML += "<img class=book-cover src=" + data.items[i].volumeInfo.imageLinks.thumbnail + ">";
+                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "</h5>";
+                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.authors + "</h6>";
+                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.publishedDate + "</h6>";
+                    results.innerHTML += "<p>" + data.items[i].volumeInfo.description + "</p>";
                 }
             },
 
