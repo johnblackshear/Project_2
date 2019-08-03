@@ -1,13 +1,13 @@
 
 // Get the search string User types in
-var $clubIdSearchTerm = $('#club-name-search');
 var $clubNameSearchTerm = $('#club-id-search');
-
-// var q = $clubSearchTerms.val().trim();
-
-var $idSubmitBtn = $('#club-id-search-submit');
+var $clubIdSearchTerm = $('#club-name-search');
+// Search submit buttons
 var $nameSubmitBtn = $('#club-name-search-submit');
-
+var $idSubmitBtn = $('#club-id-search-submit');
+// Results divs
+var $clubNameResults = $('#club-name-search-results');
+var $clubIdResults = $('#club-id-search-results');
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -46,7 +46,7 @@ var handleClubNameSearch = function (event) {
     };
     API.nameSearchClubs(search).then(function (results) {
         console.log("results: ", results);
-        // window.location.href = "/login";
+        $clubNameResults.append(JSON.stringify(results));
     });
 };
 
@@ -62,7 +62,7 @@ var handleClubIdSearch = function (event) {
     };
     API.idSearchClubs(search).then(function (results) {
         console.log("results: ", results);
-        // window.location.href = "/login";
+        $clubIdResults.append(JSON.stringify(results));
     });
 };
 

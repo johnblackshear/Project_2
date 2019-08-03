@@ -1,4 +1,6 @@
 var db = require('../models');
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 
 module.exports = function (app) {
 
@@ -206,13 +208,19 @@ module.exports = function (app) {
 
   // Search Clubs by name
   app.get('/api/clubs/namesearch/:name', function (req, res) {
-    db.Club.findOne({
+    db.Club.findAll({
       include: [{ model: db.User, as: 'Users' }],
-      where: { clubname: req.params.name }
+      where: {
+        clubname: {
+          [Op.like]: '%' + req.params.name + '%'
+        }
+      }
     }).then(function (dbClub) {
       res.json(dbClub);
     });
   });
+
+
 
 
 };
