@@ -21,7 +21,14 @@ var API = {
             url: 'api/users/' + id,
             type: 'DELETE'
         });
-    }
+    }, 
+    updateUser: function (id){
+        return $.ajax({
+            url: 'api/users/' + id,
+            type: 'PUT'
+        });
+    },
+    
 };
 
 // refreshUsers gets new Users from the db and repopulates the list
