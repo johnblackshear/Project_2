@@ -54,9 +54,9 @@
             success: function(data) {
                 for(i = 0; i < data.items.length; i++){
                     results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "<h5>";
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.authors + "<h5>";  
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.publishedDate + "<h5>";
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.description + "<h5>";                    
+                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.authors + "<h6>";  
+                    results.innerHTML += "div" + data.items[i].volumeInfo.publishedDate + "</div>";
+                    results.innerHTML += "div" + data.items[i].volumeInfo.description + "</div>";          
                 }
             },
             //Get info
