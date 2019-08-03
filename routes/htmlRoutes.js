@@ -116,9 +116,12 @@ module.exports = function (app) {
         renderUsername = renderUsername.replace(/^"(.+(?="$))"$/, '$1');
         var renderEmail = JSON.stringify(userResult.email);
         renderEmail = renderEmail.replace(/^"(.+(?="$))"$/, '$1');
-        var location = JSON.stringify(userResult.location);
+        var location = userResult.location;
         var profilePic = '<img src="' + userResult.profilePic + '" alt="Profile Picture" width="150" height="150">';
         var count = "<span class=count></span>";
+        var favAuthors = userResult.favAuthors;
+        var favBooks = userResult.favBooks;
+        var favGenres = userResult.favGenres;
 
         res.render('profile', {
           username: renderUsername,
@@ -126,7 +129,10 @@ module.exports = function (app) {
           location: location,
           clublist: '<span class=join id=club-list data-userid=' + userSession.userid + '></span>',
           profilePic: profilePic,
-          count: count
+          count: count,
+          favAuthors: favAuthors,
+          favBooks: favBooks,
+          favGenres: favGenres,
         });
       });
     } else {
