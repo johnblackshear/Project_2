@@ -13,33 +13,34 @@ module.exports = function (app) {
   app.get('/', function (req, res) {
     console.log('I AM HERE ======');
       // db === database find all from club model
-      db.Club.findAll({where:{id:{[Op.gte]: 5}},limit: 8, order: [['userCount' ,'DESC']]}).then(function(result){
+      db.Club.findAll({where:{userCount:{[Op.gte]: 10}},limit: 8, order: [['userCount' ,'DESC']]}).then(function(result){
         // console.log('result++++++', result)
         //get response and put into index handelbars
         res.render('index', {
           // clubs is the key 
-          clubs: result,
-          count: result,
+          Popclubs: result,
+          
+        clubs: result, 
         })
-
-      });
-
-});
-
-app.get('/', function (req, res) {
-  console.log('I AM HERE ======');
-    // db === database find all from club model
-    db.Club.findAll({where:{createdAt:{[Op.gte]: 5}},limit: 8, order: [['clubname' ,'DESC']]}).then(function(result){
-      // console.log('result++++++', result)
-      //get response and put into index handelbars
-      res.render('index', {
-        // clubs is the key 
-        club: result,
-      })
-
-    });
+  });
 
 });
+
+// app.get('/', function (req, res) {
+//   console.log(' HERE ======');
+//     // db === database find all from club model
+//     db.Club.findAll({where:{id: {[Op.gte]: 4}, limit: 8, order:[['id', 'DESC']]}}).then(function(data){
+//       // console.log('result++++++', result)
+//       //get response and put into index handelbars
+//       res.render('index', {
+//         // clubs is the key 
+//         clubs: data,
+//       })
+
+//     });
+
+// });
+
 
 
   //////////////////////////////////////

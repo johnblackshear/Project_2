@@ -1,20 +1,17 @@
 module.exports = function (sequelize, DataTypes) {
     var Popclub = sequelize.define('Popclub', {
         clubname: DataTypes.STRING,
-        activeusers: DataTypes.INTEGER,
         description: DataTypes.STRING,
-        activeeventid: DataTypes.STRING,
-        expiredevents: DataTypes.STRING,
-        
+        updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+        createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+        userCount: {type: DataTypes.STRING}
     });
 
     Popclub.associate = function (models) {
-        // Associating Club with Users
-        Popclub.belongsTo(models.Club, {
-            foreignKey: {
-                allowNull: false
-            },
-            through: models.UserClubs
+            Popclub.belongsTo(models.User);
+            Popclub.belongsToMany(models.User, { as: 'Users', through: { model: models.User_Club, unique: false }, foreignKey: 'club_id' });
+            Popclub.hasMany(models.Event, {
+                onDelete: "cascade"
         });
     };
     return Popclub;
