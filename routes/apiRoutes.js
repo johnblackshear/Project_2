@@ -1,4 +1,6 @@
 var db = require('../models');
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 
 module.exports = function (app) {
 
@@ -55,26 +57,26 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
-  
+
 
 
 
   //Update a user's profile
-  app.put('/api/edit/:id', function (req, res){
-    db.User.update(req.body, {where: {id: req.params.id}}).
-    then(function (dbUser) {
+  app.put('/api/edit/:id', function (req, res) {
+    db.User.update(req.body, { where: { id: req.params.id } }).
+      then(function (dbUser) {
 
         res.json(dbUser);
-    });
-  
+      });
+
   });
 
   // Delete a User by id
   app.delete('/api/users/:id', function (req, res) {
     db.User.destroy({ where: { id: req.params.id } }).
-    then(function (dbUser) {
-      res.json(dbUser);
-    });
+      then(function (dbUser) {
+        res.json(dbUser);
+      });
   });
   ////////////////////////////////////////////////////////
 
@@ -115,10 +117,31 @@ module.exports = function (app) {
   });
 
 
+<<<<<<< HEAD
   // Get a Club by id
   app.get('/api/clubs/:id', function (req, res) {
     db.Club.findOne({
       include: [db.User,  {model: db.User, as: 'Users'} ], 
+=======
+  // // Get a Club by id
+  // app.get('/api/clubs/:id', function (req, res) {
+  //   db.Club.findOne({
+  //     include: [{model: db.User, as: 'Users', include: 
+  //     [{model: db.Event}]
+  //   }],
+  //     where: { id: req.params.id }
+  //   }).then(function (dbClub) {
+  //     res.json(dbClub);
+  //   });
+  // });
+
+  // ??????????????????????????????????????????????????
+
+  // Get a Club by id
+  app.get('/api/clubs/:id', function (req, res) {
+    db.Club.findOne({
+      include: [{ model: db.User, as: 'Users' }],
+>>>>>>> 118e37d239d8274e31241f7bfb4d2d6263f297c2
       where: { id: req.params.id }
     }).then(function (dbClub) {
       res.json(dbClub);
@@ -126,6 +149,21 @@ module.exports = function (app) {
   });
   
 
+<<<<<<< HEAD
+=======
+  //   include: [{model: Tool, as: 'Instruments', include: 
+  //       [
+  //         { 
+  //           model: Teacher, include: [ /* etc */] 
+  //         }
+  //       ]
+  //     }
+  //   ]
+  //     ??????????????????????????????????????????????????
+
+
+
+>>>>>>> 118e37d239d8274e31241f7bfb4d2d6263f297c2
   // Join a club by id
   app.post('/api/clubs/:id', function (req, res) {
     var userId = req.session.userid;
@@ -148,6 +186,25 @@ module.exports = function (app) {
   // });
 
 
+<<<<<<< HEAD
+=======
+
+  ////////////////////////////////////////////////////////
+  // CLUB EVENTS API ROUTES
+
+  // Get a Clubs's events
+  app.get('/api/clubs/:id/events', function (req, res) {
+    db.Event.findAll({
+      where: { ClubId: req.params.id },
+      order: [
+        ['date', 'DESC']
+      ],
+    }).then(function (dbClubEvents) {
+      res.json(dbClubEvents);
+    });
+  });
+
+>>>>>>> 118e37d239d8274e31241f7bfb4d2d6263f297c2
   // Create an event
   app.post('/api/clubs/:id/addevent', function (req, res) {
     var newEventInfo = req.body;
@@ -159,6 +216,34 @@ module.exports = function (app) {
   })
 
   ////////////////////////////////////////////////////////
+
+
+  // SEARCH CLUBS ROUTES
+
+  // Search Clubs by id
+  app.get('/api/clubs/idsearch/:id', function (req, res) {
+    db.Club.findOne({
+      include: [{ model: db.User, as: 'Users' }],
+      where: { id: req.params.id }
+    }).then(function (dbClub) {
+      res.json(dbClub);
+    });
+  });
+
+  // Search Clubs by name
+  app.get('/api/clubs/namesearch/:name', function (req, res) {
+    db.Club.findAll({
+      include: [{ model: db.User, as: 'Users' }],
+      where: {
+        clubname: {
+          [Op.like]: '%' + req.params.name + '%'
+        }
+      }
+    }).then(function (dbClub) {
+      res.json(dbClub);
+    });
+  });
+
 
 
 
