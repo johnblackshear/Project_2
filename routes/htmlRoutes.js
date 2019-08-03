@@ -9,20 +9,19 @@ module.exports = function (app) {
 
   // Homepage HTMLGET route
   app.get('/', function (req, res) {
-    // If the user is logged in
-    if (req.session.loggedin) {
-      userSession = req.session;
-      userSessionName = JSON.stringify(userSession.username);
-      res.render('index', {
-        msg: 'Welcome ' + userSessionName
+    console.log('I AM HERE ======');
+      // db === database find all from club model
+      db.Club.findAll({where:{},limit: 8, order: [['createdAt' ,'ASC']]}).then(function(result){
+        // console.log('result++++++', result)
+        //get response and put into index handelbars
+        res.render('index', {
+          // clubs is the key 
+          clubs: result
+        })
+
       });
-    } else {
-      // User is not logged in
-      res.render('index', {
-        msg: 'Welcome to our book club app!'
-      });
-    }
-  });
+
+});
   //////////////////////////////////////
 
 
