@@ -117,7 +117,7 @@ module.exports = function (app) {
         var renderEmail = JSON.stringify(userResult.email);
         renderEmail = renderEmail.replace(/^"(.+(?="$))"$/, '$1');
         var location = JSON.stringify(userResult.location);
-        var profilePic = '<img src="'+ userResult.profilePic +'" alt="Profile Picture" width="150" height="150">';
+        var profilePic = '<img src="' + userResult.profilePic + '" alt="Profile Picture" width="150" height="150">';
         var count = "<span class=count></span>";
 
         res.render('profile', {
@@ -259,13 +259,35 @@ module.exports = function (app) {
   app.get("/books", function (req, res) {
     res.render('books');
   });
-  //////////////////////////////////////
-// Edit Profile 
-  app.get("/edit", function(req, res) {
-    res.render('edit');
-  });
+
+
+
 
   //////////////////////////////////////
+  // Edit Profile 
+  app.get("/edit", function (req, res) {
+
+    // If the user is logged in
+    if (req.session.loggedin) {
+      // Set userIdValue to the user's Id
+      var userIdValue = req.session.userid;
+
+      res.render('edit', {
+        userid: '<div id="getUserId" data-userid="' + userIdValue + '"></div>'
+      });
+
+    } else {
+      // User is not logged in
+      res.render('login', {
+        msg: 'You are not logged in. Please log in to edit your profile:'
+      });
+    }
+
+  });
+  //////////////////////////////////////
+
+
+
   // Logout 
   app.get('/logout', (req, res) => {
     req.session.destroy((err) => {

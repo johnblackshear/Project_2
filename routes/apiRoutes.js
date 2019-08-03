@@ -60,8 +60,8 @@ module.exports = function (app) {
 
 
   //Update a user's profile
-  app.put('/api/users/:id', function (req, res){
-    db.User.update(updatedUser, {where: {id: req.params.id}}).
+  app.put('/api/edit/:id', function (req, res){
+    db.User.update(req.body, {where: {id: req.params.id}}).
     then(function (dbUser) {
 
         res.json(dbUser);

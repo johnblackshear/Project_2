@@ -2,6 +2,9 @@
 // Get references to page elements
 // var $Username = $('#newuser-username');
 // var $newuserPassword = $('#newuser-password');
+
+var id = $('#getUserId').attr('data-userid');
+
 var $newuserEmail = $('#updateEmail');
 var $submitBtn = $('#submit');
 var $location = $('#location');
@@ -11,13 +14,13 @@ var $books = $('#favBooks');
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-    updateUser: function (user) {
+    updateUser: function (updatedUser) {
         return $.ajax({
             headers: {
                 'Content-Type': 'application/json'
             },
             type: 'PUT',
-            url: '/api/edit/:id',
+            url: '/api/edit/' + id,
             data: JSON.stringify(updatedUser)
         })
     }
@@ -33,9 +36,9 @@ var handleEditFormSubmit = function (event) {
     var updatedUser = {
         email: $newuserEmail.val().trim(),
         location: $location.val().trim(),
-        favGenres: $favGenres.val().split(","),
-        favAuthors: $favAuthors.val().split(","),
-        favBooks: $favBooks.val().split(""),
+        // favGenres: $favGenres.val().split(","),
+        // favAuthors: $favAuthors.val().split(","),
+        // favBooks: $favBooks.val().split(""),
         
     };
    
