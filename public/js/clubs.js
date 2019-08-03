@@ -21,7 +21,13 @@ var API = {
             url: 'api/clubs/' + id,
             type: 'DELETE'
         });
-    }    
+    },  
+    searchClub: function(){
+        return $ajax({
+            url: 'api/clubs/' + id,
+            type:'GET'  
+        });
+    }
 };
 
 // refreshClubs gets new Clubs from the db and repopulates the list

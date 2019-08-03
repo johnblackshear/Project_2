@@ -1,10 +1,50 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Books and API search</h1>            
+<div class="featured-boos-container">
+    <div class="feattured-boks-content">
+        <div class="banner-container fixed-banner featured-books-banner">
+            <div class="slider-item">
+                <img class="image" src="images/books.png" alt="books">
+            </div>  
+            <br><br>
+            <div class="intro">
+                <h2 class="banner-title">Book Finder</h2>
+            </div>
+            <div class="searchBar">
+                <input id="search" placeholder="Title or Author">
+                <button id="button" type="button">Search</button>
+            </div>
+            <br>
+            <div id="results"></div>
         </div>
-    </div>
+           </div>
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{{!-- <script src="/js/club.js"></script> --}}
+<script>
+    //create a search funtion
+    function bookSearch(){
+        
+        //taking user input and store the value inside of the variable to use
+        var search = document.getElementById("search").value 
+        document.getElementById("results").innerHTML = ""
+        console.log(search)
+        //create ajax call
+        $.ajax({
+            url: "https://www.googleapis.com/books/v1/volumes?q=" + search,
+            //specify which data to use
+            dataType: "json",
+            //create for loop
+            success: function(data) {
+                for(i = 0; i < data.items.length; i++){
+                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "<h5>";
+                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.authors + "<h5>";  
+                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.publishedDate + "<h5>";
+                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.description + "<h5>";                    
+                }
+            },
+            //Get info
+            type: 'GET'
+        });
+    }
+    //event listener to see what's going on
+    document.getElementById("button").addEventListener("click", bookSearch, false)
+</script>

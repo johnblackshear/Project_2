@@ -12,10 +12,16 @@
   <div class="row">
       <!-- Search form -->
       <div class="col-md 8">
-      <form action"/clubs/search" class="form-inline ">
+      {{!-- <form action = "/api/clubs/" class="form-inline ">
         <i class="fas fa-search" aria-hidden="true"></i>
-        <input class="form-control form-control-md ml-8 w-100" type="search" name="term"  placeholder="Search Clubs eg.. Titles, Genres, Authors, "
-          aria-label="Search">
+        <input class="form-control form-control-md ml-8 w-100" input type="search" name=""  placeholder="Search Clubs eg.. Titles, Genres, Authors, "
+          aria-label="Search"> --}}
+          <form action="/api/:id" class="search-form">
+      <i class="fas fa-search"></i>
+      <input type="search" name="term" placeholder="search for club id">
+      <input type="submit" value="Search">
+    </form>
+
       </form>
     </div>
   </div>
@@ -38,6 +44,11 @@
     </div>
     <div class="col-md-6">
       <h3 class="text-center">Recently Published Clubs</h3>
+      {{#each clubs}}
+            <div class="row">
+              <a href="/{{this.clubName}}">{{this.clubName}}</a>
+            </div>
+          {{/each}}
     </div>
   </div>
   </div>

@@ -1,4 +1,6 @@
 var db = require('../models');
+var Sequelize = require('sequelize');
+var Op = Sequelize.Op;
 
 module.exports = function (app) {
 
@@ -152,9 +154,19 @@ app.post('/api/clubs/:id/addevent', function (req, res) {
     res.json(newClubEvent);
   })
 })
+ // search route maybe?//
+app.get('/api/search/:id',(req, res)=>{
+  var {term} = req.query;
+  var clubId = req.params.id;
+  
 
+  db.Club.findAll({where: {id: { [Op.like]: '%' + term + clubId + '%' } } })
+    .then( Clubs => res.render('api', {clubs}))
+    .catch( err => console.log(err));
 
-
+  });
 };
+
+
 
 
