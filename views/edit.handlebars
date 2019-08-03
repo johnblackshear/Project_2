@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Edit Profile</h5>
+                    {{{userid}}}
+                    <form class="clearfix mb-4" action="POST">
+                        <div class="form-group">
+                            <label for="newuser-username">Email address:</label>
+                            <input type="text" id="updateEmail" class="form-control"
+                                aria-describedby="newuser-username" placeholder="name@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="newuser-password">Profile Picture URL:</label>
+                            <input type="text" id="newProfilePic" class="form-control"
+                                aria-describedby="newuser-password" placeholder="http://www.myphotoexampleurl.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="newuser-email">Location</label>
+                            <input type="text" id="location" class="form-control"
+                                aria-describedby="newuser-email" placeholder="City, State">
+                        </div>
+                         <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Favorite Genres:</label>
+                            <textarea class="form-control" id="favGenres" rows="5"placeholder="Example: drama, mystery, historical fiction"></textarea>
+                        </div>
+                            <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Favorite Authors</label>
+                            <textarea class="form-control" id="favAuthors" rows="5"placeholder="Example: William Shakespeare, Dan Brown, J.K. Rowling, Stephanie Meyer"></textarea>
+                        </div>
+                            <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Favorite Books</label>
+                            <textarea class="form-control" id="favBooks" rows="5"placeholder="Example: To Kill a Mokingbird, Harry Potter, Twilight, The Color Purple"></textarea>
+                        </div>
+                        <button id="submit" class="btn btn-primary float-right">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/edit.js"></script>

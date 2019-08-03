@@ -2,9 +2,11 @@
     <div class="container">
 
                 <h1>Welcome {{username}}!</h1>
+                
         <div class="row">
             <div class="col-md-3">
                 <div class="profilePic">{{{profilePic}}}</div>
+                <button type="button" class="btn btn-link" id="editProfile">Edit Profile</button>
             </div>
             <div class="col-md-9">
                 
@@ -16,8 +18,8 @@
         </div>
         <div class = "row">
             <div class = "col">
-                <h1>Member of {{count}} book clubs</h1>
-                Clubs: {{{clublist}}}
+                <h1>{{{count}}}</h1>
+                {{{clublist}}}
 
             </div>
         </div>
@@ -44,3 +46,15 @@
 border: solid black 3px;
 }
 </style>
+
+<script>
+$("img").on('click', function(){
+
+    window.location.href = "/edit/";
+});
+$("#editProfile").on('click', function(){
+
+    window.location.href = "/edit/";
+});
+
+</script>
