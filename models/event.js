@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         location: DataTypes.STRING,
         booktitle: DataTypes.STRING,
         bookdesc: DataTypes.STRING,
-        bookthumbnail: DataTypes.INTEGER
+        bookthumbnail: DataTypes.STRING
     });
 
     Event.associate = function (models) {

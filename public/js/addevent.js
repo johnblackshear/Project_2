@@ -101,7 +101,7 @@ $(document).on('click', '#submit-event', function (event) {
     var clubevent = {
         eventname: $eventName.val().trim(),
         description: $eventDescription.val().trim(),
-        date: $date,
+        date: $date.val().trim(),
         // time: $time.val().trim(),
         location: $location.val().trim(),
     }
