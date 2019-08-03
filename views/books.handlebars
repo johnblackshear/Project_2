@@ -3,7 +3,7 @@
         <div class="banner-container fixed-banner featured-books-banner">
             <div class="slider-item">
                 <img class="image" src="images/books.png" alt="books">
-            </div>  
+            </div>
             <br><br>
             <div class="intro">
                 <h2 class="banner-title">Book Finder</h2>
@@ -15,34 +15,61 @@
             <br>
             <div id="results"></div>
         </div>
-           </div>
+    </div>
 </div>
 
 <style>
     body {
-    background-color: #f5f5f5;
-    font-family: Roboto,sans-serif;
-    font-weight: 400;
-    color: #333;  
-    -webkit-font-smoothing: antialiased;
-    text-align: center;
-    }
-    .image {
+        background-color: #f5f5f5;
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+        color: #333;
+        -webkit-font-smoothing: antialiased;
+        }
+
+    ​ .image {
         width: 100%;
     }
-    .searchBar{
+
+    ​ .searchBar {
         width: 400px;
         margin-right: auto;
         margin-left: auto;
     }
+
+    ​ #results {
+        text-align: left !important;
+        margin: 40px !important;
+    }
+
+    ​ .bookdiv {
+        margin-bottom: 50px;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    ​ .book-cover {
+        float: left;
+        margin: 0 30px;
+    }
+
+
+
+    .intro,
+    .searchBar {
+        text-align: center;
+    }
 </style>
+
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     //create a search funtion
-    function bookSearch(){
-        
+    function bookSearch() {
+
         //taking user input and store the value inside of the variable to use
-        var search = document.getElementById("search").value 
+        var search = document.getElementById("search").value
         document.getElementById("results").innerHTML = ""
         console.log(search)
         //create ajax call
@@ -51,12 +78,13 @@
             //specify which data to use
             dataType: "json",
             //create for loop
-            success: function(data) {
-                for(i = 0; i < data.items.length; i++){
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "<h5>";
-                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.authors + "<h6>";  
-                    results.innerHTML += "div" + data.items[i].volumeInfo.publishedDate + "</div>";
-                    results.innerHTML += "div" + data.items[i].volumeInfo.description + "</div>";          
+            success: function (data) {
+                for (i = 0; i < data.items.length; i++) {
+                    results.innerHTML += "<img class=book-cover src=" + data.items[i].volumeInfo.imageLinks.thumbnail + ">";
+                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "</h5>";
+                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.authors + "</h6>";
+                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.publishedDate + "</h6>";
+                    results.innerHTML += "<p>" + data.items[i].volumeInfo.description + "</p>";
                 }
             },
             //Get info
