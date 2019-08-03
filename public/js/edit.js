@@ -8,9 +8,11 @@ var id = $('#getUserId').attr('data-userid');
 var $newuserEmail = $('#updateEmail');
 var $submitBtn = $('#submit');
 var $location = $('#location');
-var $genres = $('#favGenres');
-var $authors = $('#favAuthors');
-var $books = $('#favBooks');
+var $favGenres = $('#favGenres');
+var $favAuthors = $('#favAuthors');
+var $favBooks = $('#favBooks');
+
+
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -36,9 +38,9 @@ var handleEditFormSubmit = function (event) {
     var updatedUser = {
         email: $newuserEmail.val().trim(),
         location: $location.val().trim(),
-        // favGenres: $favGenres.val().split(","),
-        // favAuthors: $favAuthors.val().split(","),
-        // favBooks: $favBooks.val().split(""),
+        favGenres: $favGenres.val(),
+        favAuthors: $favAuthors.val(),
+        favBooks: $favBooks.val(),
         
     };
    
