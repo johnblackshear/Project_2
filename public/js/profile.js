@@ -33,7 +33,7 @@ var refreshClub = function () {
     API.getClubs(idToGet).then(function (data) {
         var county = data[0].Clubs2.length;
         if(county === 0){
-            county = "<a href='/clubs/'>Join a book club!</a>";
+            county = "<a href='/clubs'>Join a book club!</a>";
         }else if (county === 1){
             county = "Member of " +county + " book club:";
         }else {
@@ -43,7 +43,7 @@ var refreshClub = function () {
         var $clubs = data[0].Clubs2.map(function (club) {
             var $a = $('<a>')
                 .text(club.clubname)
-                .attr('href', '/api/clubs/' + club.id)
+                .attr('href', '/clubs/' + club.id)
                 .append('<br>')
 
             var $li = $('<li>')

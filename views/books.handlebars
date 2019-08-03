@@ -5,15 +5,21 @@
                 <img class="image" src="images/books.png" alt="books">
             </div>
             <br><br>
-            <div class="intro">
-                <h2 class="banner-title">Book Finder</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="intro">
+                            <h2 class="banner-title">Book Finder</h2>
+                        </div>
+                        <div class="searchBar">
+                            <input id="search" placeholder="Title or Author">
+                            <button id="button" type="button">Search</button>
+                        </div>
+                        <br>
+                        <div id="results"></div>
+                    </div>
+                </div>
             </div>
-            <div class="searchBar">
-                <input id="search" placeholder="Title or Author">
-                <button id="button" type="button">Search</button>
-            </div>
-            <br>
-            <div id="results"></div>
         </div>
     </div>
 </div>
@@ -25,53 +31,46 @@
         font-weight: 400;
         color: #333;
         -webkit-font-smoothing: antialiased;
-        }
-
-    ​ .image {
-        width: 100%;
+        text-align: center;
     }
-
-    ​ .searchBar {
+    .image {
+        width: 100%;
+        height: 100%;
+    }
+    .searchBar {
         width: 400px;
         margin-right: auto;
         margin-left: auto;
     }
-
-    ​ #results {
-        text-align: left !important;
-        margin: 40px !important;
+    #results {
+        text-align: left;
     }
-
-    ​ .bookdiv {
+    .bookdiv {
         margin-bottom: 50px;
         border: 1px solid #ccc;
         padding: 20px;
         border-radius: 8px;
     }
-
-    ​ .book-cover {
+    .book-cover {
         float: left;
-        margin: 0 30px;
-    }
-
-
-
-    .intro,
-    .searchBar {
-        text-align: center;
+        margin: 0 20px 0 0;
     }
 </style>
-
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     //create a search funtion
     function bookSearch() {
-
         //taking user input and store the value inside of the variable to use
+<<<<<<< HEAD
         var search = document.getElementById("search").value
         document.getElementById("results").innerHTML = ""
         console.log(search)
+=======
+        var search = document.getElementById("search").value;
+        document.getElementById("results").innerHTML = "";
+        var resultsDiv = $('#results');
+        console.log(search);
+>>>>>>> ec259a1489031daeddf2a3c6b7c63c5c47b004b9
         //create ajax call
         $.ajax({
             url: "https://www.googleapis.com/books/v1/volumes?q=" + search,
@@ -80,11 +79,13 @@
             //create for loop
             success: function (data) {
                 for (i = 0; i < data.items.length; i++) {
-                    results.innerHTML += "<img class=book-cover src=" + data.items[i].volumeInfo.imageLinks.thumbnail + ">";
-                    results.innerHTML += "<h5>" + data.items[i].volumeInfo.title + "</h5>";
-                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.authors + "</h6>";
-                    results.innerHTML += "<h6>" + data.items[i].volumeInfo.publishedDate + "</h6>";
-                    results.innerHTML += "<p>" + data.items[i].volumeInfo.description + "</p>";
+                    var bookDiv = $('<div class="bookdiv clearfix">');
+                    bookDiv.append("<p class=book-cover><img src=" + data.items[i].volumeInfo.imageLinks.thumbnail + "></p>");
+                    bookDiv.append("<h5>" + data.items[i].volumeInfo.title + "</h5>");
+                    bookDiv.append("<h6>" + data.items[i].volumeInfo.authors + "</h6>");
+                    bookDiv.append("<span>" + data.items[i].volumeInfo.publishedDate + "</span>");
+                    bookDiv.append("<p>" + data.items[i].volumeInfo.description + "</p>");
+                    resultsDiv.append(bookDiv);
                 }
             },
             //Get info

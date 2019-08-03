@@ -47,6 +47,7 @@ var handleClubNameSearch = function (event) {
     API.nameSearchClubs(search).then(function (data) {
         console.log("data: ", data);
         console.log("data.length: ", data.length);
+        $clubNameResults.append('<h5>Results:</h5>');
 
         for (var i = 0; i < data.length; i++) {
             var $clubid = data[i].id;
@@ -59,14 +60,12 @@ var handleClubNameSearch = function (event) {
             var $li = $('<li>')
                 .append('Club Name: ')
                 .append($a)
-                .append('<br>Club Id: ' + $clubid);
+                .append('<br>Club Id: ' + $clubid)
+                .append('<hr>');
 
-            $clubNameResults.empty();
-            $clubNameResults.append('<h3>Results:</h3>');
+            // $clubNameResults.empty();
             $clubNameResults.append($li);
         }
-
-
     });
 };
 
@@ -97,7 +96,7 @@ var handleClubIdSearch = function (event) {
 
         // return $li;
         $clubIdResults.empty();
-        $clubIdResults.append('<h3>Results:</h3>');
+        $clubIdResults.append('<h5>Results:</h5>');
         $clubIdResults.append($li);
     });
 
