@@ -1,30 +1,64 @@
 <div id="home">
   <div class="container">
+              <div class="row">
+            <div class="col">
+
+                <img src="images/books.jpg" alt="" width="500" height="500" style="float:right;">
+                <h2>Looking for a fun way to enjoy books and meet new people? </h2>
+                <p>Start a book club! We believe book clubs enhance the reading experience</p>
+                <p>Discussing books with friends, family, neighbors, colleagues, and/or acquaintances can help keep
+                    you reading, provide new perspectives on life and literature, and lead to the creation of
+                    special bond</p>
+
+            </div>
+        </div>
     <div class="row">
       <div class="col">
         <h1>Discover the Club that fits you</h1>
-        <h2>Welcome to our app</h2>
+        {{!-- <h2>Welcome to our app</h2>
         <p>Lorum Ipsum</p>
         <br><br>
-        <br><br>
+        <br><br> --}}
       </div>
     </div>
-  <div class="row">
-      <!-- Search form -->
-      <div class="col-md 8">
-      <form class="form-inline ">
-        <i class="fas fa-search" aria-hidden="true"></i>
-        <input class="form-control form-control-md ml-8 w-100" type="text" placeholder="Search Clubs eg.. Titles, Genres, Authors, "
-          aria-label="Search">
-      </form>
-    </div>
-  </div>
-  <br>
-  <br>
-  <br>
-  <br>
+        <div class="row">
+            <!-- Search for club by name form -->
+            <div class="col-md 8">
+                <form class="clearfix mb-4">
+                    <div class="form-group">
+                        <input type="search" id="club-name-search" class="form-control"
+                            aria-describedby="club-name-search" placeholder="Search for a club by name">
+                        <input type="submit" id="club-name-search-submit" value="Search">
+                        {{!-- <button class="btn" id="club-name-search-submit">Submit</button> --}}
+                    </div>
+                </form>
+                <div id="club-name-search-results"></div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Search for club by id form -->
+            <div class="col-md 8">
+                <form class="clearfix mb-4">
+                    <div class="form-group">
+                        <input type="search" id="club-id-search" class="form-control" aria-describedby="club-id-search"
+                            placeholder="Search for a club by id">
+                        <input type="submit" id="club-id-search-submit" value="Search">
+                        {{!-- <button class="btn" id="club-id-search-submit">Submit</button> --}}
+                    </div>
+                </form>
+                <div id="club-id-search-results"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
   <div class="row">
     <div class="col-md-6">
+                <h3 class="text-center">Popular Clubs</h3>
+                <div>
+                    {{log clubs}}
+                    {{!-- data from the routes --}}  
       <h3 class="text-center">Popular Clubs</h3>
         <div>
           
@@ -32,8 +66,8 @@
             <div class="row">
              <a href="/clubs/{{this.id}}">{{this.clubname}}</a>
               <p>{{this.userCount}}</p>
+        
             </div>
-          {{/each}}
         </div>
     </div>
     <div class="col-md-6">
@@ -51,5 +85,7 @@
   </div>
 </div>
 
+{{!-- <script src="/js/club.js"></script> --}}
+
 {{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
-{{!-- <script src="/js/index.js"></script> --}}
+<script src="/js/index.js"></script>
