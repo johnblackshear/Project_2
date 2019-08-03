@@ -53,7 +53,7 @@
               </div>
             <div class="col-6">
               <div class="row"> 
-                <p>{{this.userCount}}</p> 
+                <p> Users: {{this.userCount}}</p> 
               </div>
             </div>
             </div>
@@ -64,8 +64,16 @@
     <div class="col-md-6">
           {{#each clubs}}
             <div class="row">
-              <a href="/clubs/{{this.id}}">{{this.clubname}}</a>
-              <br> {{this.createdAT}}
+              <div class="col-6">
+                <div class='row'>
+                  <a href="/clubs/{{this.id}}">{{this.clubname}}</a>
+                </div>
+              </div>
+            <div class="col-6">
+              <div class="row"> 
+                <p> About Club: {{this.description}}</p> 
+              </div>
+            </div>
             </div>
           {{/each}}
     </div>
