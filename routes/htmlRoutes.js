@@ -1,6 +1,8 @@
 var db = require('../models');
 var path = require("path");
 var userSession;
+var Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = function (app) {
 
@@ -9,21 +11,20 @@ module.exports = function (app) {
 
   // Homepage HTMLGET route
   app.get('/', function (req, res) {
-    // If the user is logged in
-    if (req.session.loggedin) {
-      userSession = req.session;
-      userSessionName = JSON.stringify(userSession.username);
+    console.log('I AM HERE ======');
+    // db === database find all from club model
+    db.Club.findAll({ where: { userCount: { [Op.gte]: 10 } }, limit: 8, order: [["userCount", "DESC"]] }).then(function (result) {
+      // console.log('result++++++', result)
+      //get response and put into index handelbars
       res.render('index', {
-        msg: 'Welcome ' + userSessionName
-      });
-    } else {
-      // User is not logged in
-      res.render('index', {
-        msg: 'Welcome to our book club app!'
-      });
-    }
+        // clubs is the key 
+        Popclubs: result,
+
+        clubs: result,
+      })
+    });
+
   });
-  //////////////////////////////////////
 
 
   //////////////////////////////////////
