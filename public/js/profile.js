@@ -9,13 +9,13 @@ var $clubList = $('#club-list');
 var API = {
     getClubs: function (id) {
         return $.ajax({
-            url: 'api/users/' + id + '/clubs',
+            url: '/api/users/' + id + '/clubs',
             type: 'GET'
         });
     },
     getClubCount: function (id) {
         return $.ajax({
-            url: 'api/users/' + id + '/clubs',
+            url: '/api/users/' + id + '/clubs',
             type: 'GET'
         });
     }
