@@ -43,7 +43,7 @@ var refreshClub = function () {
         var $clubs = data[0].Clubs2.map(function (club) {
             var $a = $('<a>')
                 .text(club.clubname)
-                .attr('href', '/api/clubs/' + club.id)
+                .attr('href', '/clubs/' + club.id)
                 .append('<br>')
 
             var $li = $('<li>')

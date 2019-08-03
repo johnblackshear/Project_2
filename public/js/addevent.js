@@ -63,12 +63,12 @@ var handleFormSubmit = function (event) {
     // }
 
     API.saveEvent(clubevent).then(function (newevent) {
-        var $div = $('.card-body');
+        // var $div = $('.card-body');
         console.log("test2", newevent);
         // refreshevents()
-        // window.location.replace('/clubs/' + theClubId);
-        $div.empty();
-        $div.append(newevent);
+        window.location.replace('/clubs/' + theClubId);
+        // $div.empty();
+        // $div.append(newevent);
     })
 
 };

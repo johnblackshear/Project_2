@@ -1,3 +1,4 @@
+
 div#clubwrapper {
     border: 1px solid#ccc;
 }
@@ -23,4 +24,33 @@ div#clubwrapper {
 
 #club-join-btn:hover {
     background: #0a5b5e !important;
+}
+
+#event-add-btn {
+    background: #539092 !important;
+    color: #fff;
+}
+
+#event-add-btn:hover {
+    background: #0a5b5e !important;
+}
+
+
+a.clubtitle, a.clubtitle:visited {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.clubtitle a:hover {
+
+}
+
+.list-group-item {
+    line-height: 1.3em !important;
+}
+
+.createdAtdate {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #333;
 }
