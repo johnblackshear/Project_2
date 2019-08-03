@@ -1,3 +1,25 @@
+<style>
+    .searchBar {
+        width: 400px;
+    }
+
+    #results {
+        text-align: left;
+    }
+
+    .bookdiv {
+        margin-bottom: 50px;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .book-cover {
+        float: left;
+        margin: 0 20px 0 0;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-8 offset-2">
@@ -32,12 +54,23 @@
                             <input type="text" id="newevent-location" class="form-control"
                                 aria-describedby="newevent-location" placeholder="Enter location">
                         </div>
-                        <div class="form-group">
-                            <label for="newevent-book">Book:</label>
-                            <input type="text" id="newevent-book" class="form-control" aria-describedby="newevent-book"
-                                placeholder="Enter book">
+
+                        {{!-- <label for="newevent-book">Book:</label> --}}
+                        {{!-- <input type="text" id="newevent-book" class="form-control" aria-describedby="newevent-book"
+                                placeholder="Enter book"> --}}
+
+                        <div class="intro">
+                            <h4 class="banner-title">Book Finder</h4>
                         </div>
-                        <button id="submit" class="btn btn-primary float-right">Submit</button>
+                        <div class="searchBar">
+                            <input id="search" placeholder="Title or Author">
+                            <button id="book-search-button" type="button">Search</button>
+                        </div>
+                        <br>
+                        <div id="results"></div>
+
+
+                        <button id="submit-event" class="btn btn-primary float-right">Submit</button>
                     </form>
                 </div>
             </div>
@@ -47,3 +80,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/addevent.js"></script>
+
+<script>
+
+</script>

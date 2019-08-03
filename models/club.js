@@ -4,6 +4,7 @@ module.exports = function (sequelize, DataTypes) {
         description: DataTypes.STRING,
         updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
         createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+        userCount: {type: DataTypes.STRING}
     });
 
     Club.associate = function (models) {

@@ -96,9 +96,9 @@ var refreshClub = function () {
             var $eventName = data[i].eventname;
             var $description = data[i].description;
             var $location = data[i].location;
-            var $book = data[i].book;
+            var $bookthumbnail = data[i].bookthumbnail;
 
-            $eventBookDiv.html('<img src="../../public/images/logo-icon.png"><br>' + $book);
+            $eventBookDiv.html('<img src="' + $bookthumbnail + '"><br>');
 
             $eventDateDiv.append($day + '<br>' + $monthName + '<br>' + $year + '<br>');
             // $eventBookDiv.append();
