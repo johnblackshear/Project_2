@@ -371,7 +371,7 @@ module.exports = function (app) {
     term = term.toLowerCase();
 
     db.Club.findOne({where: { id: { [Op.like]: '%' + term + '%'   } } })
-    .then( res.redirect("clubs/api/" + term))
+    .then( res.redirect(term))
   
   })
 
