@@ -1,4 +1,3 @@
-
 // Get the search string User types in
 var $clubNameSearchTerm = $('#club-id-search');
 var $clubIdSearchTerm = $('#club-name-search');

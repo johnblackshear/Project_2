@@ -371,5 +371,15 @@ module.exports = function (app) {
 
   });
 
+  app.get('/', function(req, res){
+    console.log("id:", id);
+    var {term} = req.query;
+    term = term.toLowerCase();
+
+    db.Club.findOne({where: { id: { [Op.like]: '%' + term + '%'   } } })
+    .then( res.redirect(term))
+  
+  })
+
 
 };
