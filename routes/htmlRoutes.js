@@ -1,6 +1,8 @@
 var db = require('../models');
 var path = require("path");
 var userSession;
+var Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = function (app) {
 
@@ -11,17 +13,35 @@ module.exports = function (app) {
   app.get('/', function (req, res) {
     console.log('I AM HERE ======');
       // db === database find all from club model
-      db.Club.findAll({where:{},limit: 8, order: [['createdAt' ,'ASC']]}).then(function(result){
+      db.Club.findAll({where:{id:{[Op.gte]: 5}},limit: 8, order: [['userCount' ,'DESC']]}).then(function(result){
         // console.log('result++++++', result)
         //get response and put into index handelbars
         res.render('index', {
           // clubs is the key 
-          clubs: result
+          clubs: result,
+          count: result,
         })
 
       });
 
 });
+
+app.get('/', function (req, res) {
+  console.log('I AM HERE ======');
+    // db === database find all from club model
+    db.Club.findAll({where:{createdAt:{[Op.gte]: 5}},limit: 8, order: [['clubname' ,'DESC']]}).then(function(result){
+      // console.log('result++++++', result)
+      //get response and put into index handelbars
+      res.render('index', {
+        // clubs is the key 
+        club: result,
+      })
+
+    });
+
+});
+
+
   //////////////////////////////////////
 
 

@@ -30,7 +30,8 @@
           
           {{#each clubs}}
             <div class="row">
-              <a href="/clubs/{{this.id}}">{{this.clubname}}</a>
+             <a href="/clubs/{{this.id}}">{{this.clubname}}</a>
+              <p>{{this.userCount}}</p>
             </div>
           {{/each}}
         </div>
@@ -42,6 +43,7 @@
           {{#each clubs}}
             <div class="row">
               <a href="/clubs/{{this.id}}">{{this.clubname}}</a>
+              <br> {{this.createdAT}}
             </div>
           {{/each}}
     </div>
