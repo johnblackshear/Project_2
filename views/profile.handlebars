@@ -18,7 +18,7 @@
         </div>
         <div class = "row">
             <div class = "col">
-                <h1>Member of {{{count}}}:</h1>
+                <h1>{{{count}}}</h1>
                 {{{clublist}}}
 
             </div>
@@ -48,7 +48,10 @@ border: solid black 3px;
 </style>
 
 <script>
+$("img").on('click', function(){
 
+    window.location.href = "/edit/";
+});
 $("#editProfile").on('click', function(){
 
     window.location.href = "/edit/";

@@ -12,14 +12,6 @@ module.exports = function (app) {
     });
   });
 
-  //Update a user's profile
-  app.post('/api/edit', function (req, res){
-    db.User.update(req.body).then(function (dbUser) {
-        res.json(dbUser);
-    });
-
-  });
-
 
   // Get All Users
   app.get("/api/users", function (req, res) {
@@ -67,10 +59,20 @@ module.exports = function (app) {
 
 
 
+  //Update a user's profile
+  app.put('/api/users/:id', function (req, res){
+    db.User.update(updatedUser, {where: {id: req.params.id}}).
+    then(function (dbUser) {
+
+        res.json(dbUser);
+    });
+  
+  });
 
   // Delete a User by id
   app.delete('/api/users/:id', function (req, res) {
-    db.User.destroy({ where: { id: req.params.id } }).then(function (dbUser) {
+    db.User.destroy({ where: { id: req.params.id } }).
+    then(function (dbUser) {
       res.json(dbUser);
     });
   });
@@ -187,6 +189,7 @@ module.exports = function (app) {
       res.json(newClubEvent);
     })
   })
+
 
 
 

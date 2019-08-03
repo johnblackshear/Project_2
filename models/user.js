@@ -13,13 +13,30 @@ module.exports = function (sequelize, DataTypes) {
         User.hasMany(models.Club, {
             onDelete: "cascade"
         });
+    };
+    User.associate = function (models) {
+        User.hasMany(models.favAuthors, {
+            onDelete: "cascade"
+        });
+    };
+    User.associate = function (models) {
+        User.hasMany(models.favBooks, {
+            onDelete: "cascade"
+        });
+    };
+    User.associate = function (models) {
+        User.hasMany(models.favGenres, {
+            onDelete: "cascade"
+        });
+    };
 
-    User.belongsToMany(models.Club, { as: 'Clubs2', through: { model: models.User_Club, unique: false }, foreignKey: 'user_id' });
-
+    User.associate = function (models){
+        User.belongsToMany(models.Club, { as: 'Clubs2', through: { model: models.User_Club, unique: false }, foreignKey: 'user_id' });
     };
 
     return User;
-};
+    };
+
 
 
 // module.exports = function (sequelize, DataTypes) {

@@ -32,10 +32,12 @@ var refreshClub = function () {
 
     API.getClubs(idToGet).then(function (data) {
         var county = data[0].Clubs2.length;
-        if(!county === 1){
-            county = county + " book clubs"
+        if(county === 0){
+            county = "<a href='/clubs/'>Join a book club!</a>";
+        }else if (county === 1){
+            county = "Member of " +county + " book club:";
         }else {
-            county = county + " book club"
+            county = "Member of " +county + " book clubs:";
         };
         console.log("YO DATA: ", data);
         var $clubs = data[0].Clubs2.map(function (club) {

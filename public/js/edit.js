@@ -2,7 +2,7 @@
 // Get references to page elements
 // var $Username = $('#newuser-username');
 // var $newuserPassword = $('#newuser-password');
-var $newuserEmail = $('#newuser-email');
+var $newuserEmail = $('#updateEmail');
 var $submitBtn = $('#submit');
 var $location = $('#location');
 var $genres = $('#favGenres');
@@ -11,14 +11,14 @@ var $books = $('#favBooks');
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-    saveUser: function (user) {
+    updateUser: function (user) {
         return $.ajax({
             headers: {
                 'Content-Type': 'application/json'
             },
-            type: 'POST',
-            url: 'api/edit',
-            data: JSON.stringify(user)
+            type: 'PUT',
+            url: '/api/edit/:id',
+            data: JSON.stringify(updatedUser)
         })
     }
 };
@@ -30,7 +30,7 @@ $submitBtn.on('click', handleEditFormSubmit);
 var handleEditFormSubmit = function (event) {
     event.preventDefault();
     console.log("UPDATE PROFILE");
-    var user = {
+    var updatedUser = {
         email: $newuserEmail.val().trim(),
         location: $location.val().trim(),
         favGenres: $favGenres.val().split(","),
@@ -39,7 +39,7 @@ var handleEditFormSubmit = function (event) {
         
     };
    
-    API.saveUser(user).then(function () {
+    API.updateUser(updatedUser).then(function () {
         
         window.location.href = "/profile";
     });
