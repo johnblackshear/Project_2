@@ -12,6 +12,7 @@ module.exports = function (app) {
     });
   });
 
+
   // Get All Users
   app.get("/api/users", function (req, res) {
     // Here we add an "include" property to our options in our findAll query
@@ -54,14 +55,24 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
+  
 
 
 
+  //Update a user's profile
+  app.put('/api/edit/:id', function (req, res){
+    db.User.update(req.body, {where: {id: req.params.id}}).
+    then(function (dbUser) {
 
+        res.json(dbUser);
+    });
+  
+  });
 
   // Delete a User by id
   app.delete('/api/users/:id', function (req, res) {
-    db.User.destroy({ where: { id: req.params.id } }).then(function (dbUser) {
+    db.User.destroy({ where: { id: req.params.id } }).
+    then(function (dbUser) {
       res.json(dbUser);
     });
   });
@@ -178,6 +189,7 @@ module.exports = function (app) {
       res.json(newClubEvent);
     })
   })
+
 
 
 
