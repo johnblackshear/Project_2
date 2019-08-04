@@ -1,10 +1,8 @@
-var $joinButton = $('#club-join-btn');
-var $addEventButton = $('#event-add-btn');
-var $clubEventBriefDiv = $('#club-event-brief');
+
 var $clubMemberListColumn = $('#club-member-list');
 var $ownerDiv = $('#owner');
 var idToGet = $('#join-btn-id').attr('data-clubid');
-// console.log("idToGet: ", idToGet);
+
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -20,18 +18,6 @@ var API = {
             type: 'GET'
         });
     },
-    joinClub: function (id) {
-        return $.ajax({
-            url: '/api/clubs/' + id,
-            type: 'POST'
-        });
-    },
-    addEvent: function (id) {
-        return $.ajax({
-            url: '/api/clubs/' + id + '/addevent',
-            type: 'GET'
-        });
-    },
     getClubEvents: function (id) {
         return $.ajax({
             url: '/api/clubs/' + id + '/events',
@@ -40,11 +26,12 @@ var API = {
     }
 };
 
-// // refreshClub gets new info from the db and repopulates the list
-var refreshClub = function () {
+
+
+// refreshEvent gets new info from the db and repopulates the list
+var refreshEvent = function () {
 
     API.getClub(idToGet).then(function (data) {
-        // console.log("CLUB DATA: ", data);
         var $members = data.Users.map(function (user) {
             var $a = $('<a>')
                 .text(user.username)
@@ -67,6 +54,7 @@ var refreshClub = function () {
         $li.append($a);
         $ownerDiv.append($li);
     });
+
     // THIS CODE DISPLAYS EVENTS ON THE CLUB MAIN PAGE
     API.getClubEvents(idToGet).then(function (data) {
 
@@ -100,26 +88,6 @@ var refreshClub = function () {
         }
     });
 
+    refreshEvent();
+
 };
-
-var handleJoinBtnClick = function () {
-    $(this).attr("data-clubid")
-    var idToJoin = $(this)
-        .attr('data-clubid');
-    API.joinClub(idToJoin);
-    $joinButton.hide();
-    refreshClub();
-};
-
-// Club owner will see Add Event button, click will redirect to the addevent page
-var handleAddEventBtnClick = function () {
-    // console.log("clicky");
-    // console.log("idToGet: ", idToGet);
-    window.location.href = "/clubs/" + idToGet + "/addevent";
-};
-
-refreshClub();
-
-$joinButton.on('click', handleJoinBtnClick);
-$addEventButton.on('click', handleAddEventBtnClick);
-

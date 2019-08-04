@@ -58,7 +58,7 @@ module.exports = function (app) {
     });
   });
 
-  
+
 
 
 
@@ -183,6 +183,21 @@ module.exports = function (app) {
     });
   });
 
+  // Get a specific club event by id
+  app.get('/api/clubs/:id/events/:eventid', function (req, res) {
+    db.Event.findAll({
+      where: { 
+        [Op.and]: [{ClubId: req.params.id}, {id: req.params.eventid}] 
+      },
+      order: [
+        ['date', 'DESC']
+      ],
+    }).then(function (dbClubEvents) {
+      res.json(dbClubEvents);
+    });
+  });
+
+
   // Create an event
   app.post('/api/clubs/:id/addevent', function (req, res) {
     var newEventInfo = req.body;
@@ -191,7 +206,8 @@ module.exports = function (app) {
     db.Event.create(newEventInfo).then(function (newClubEvent) {
       res.json(newClubEvent);
     })
-  })
+  });
+  ////////////////////////////////////////////////////////
 
 
 

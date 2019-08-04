@@ -191,3 +191,10 @@ li {
   width: 70%;
   float: left;
 }
+
+/* SESSION */
+
+#sessionwrapper {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
