@@ -55,3 +55,18 @@ a.clubtitle, a.clubtitle:visited {
     color: #333;
 }
 
+
+
+
+#club-header {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background: #f7f2ee;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+
+#hmenu {
+    margin-bottom: 15px;
+}

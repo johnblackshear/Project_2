@@ -3,7 +3,15 @@
 <div class="container" id="sessionwrapper">
     <div class="row">
         <div class="col-md">
-            {{session}}
+            {{{session}}}
+        </div>
+    </div>
+</div>
+
+<div class="container" id="club-title-wrapper">
+    <div class="row">
+        <div class="col-md" id="club-header">
+            <h2>{{clubname}}</h2>
         </div>
     </div>
 </div>
@@ -13,7 +21,7 @@
         <div class="col-3" id="leftnav">
             {{!-- <span class="top"><br>{{{message}}}</span> --}}
             <br><br>
-            <h4>{{clubname}}</h4>
+            {{!-- <h4>{{clubname}}</h4> --}}
             <span class="top">{{{id}}}</span><br><br>
             Owner: <div id="owner"></div><br>
             Members: <span id="members"></span><br>
@@ -28,3 +36,4 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/event.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>

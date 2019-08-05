@@ -58,11 +58,13 @@ module.exports = function (app) {
     });
   });
 
+  db.Club.findAll().then(function (dbClubs) {
+    res.json(dbClubs);
+  });
 
 
 
-
-  //Update a user's profile
+  // Update a user's profile
   app.put('/api/edit/:id', function (req, res) {
     db.User.update(req.body, { where: { id: req.params.id } }).
       then(function (dbUser) {

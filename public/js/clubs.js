@@ -1,11 +1,12 @@
-console.log("HEY");
-
 var $clubList = $('#club-list');
 var $yourClubList = $('#your-club-list');
 
+var idToGet = $yourClubList.attr('data-userid');
+console.log("IDTOGET: ", idToGet);
+
 // The API object contains methods for each kind of request we'll make
 var API = {
-    getClubs: function () {
+    getAllClubs: function () {
         return $.ajax({
             url: 'api/clubs',
             type: 'GET'
@@ -13,7 +14,7 @@ var API = {
     },
     getYourClubs: function (id) {
         return $.ajax({
-            url: 'api/users/' + id + '/clubs',
+            url: '/api/users/' + id + '/clubs',
             type: 'GET'
         });
     },
@@ -34,7 +35,9 @@ var API = {
 // refreshClubs gets new Clubs from the db and repopulates the list
 var refreshClubs = function () {
 
-    API.getClubs().then(function (data) {
+
+
+    API.getAllClubs().then(function (data) {
         console.log("check this data: ", data);
         var $clubs = data.map(function (club) {
             var $a = $('<a class="clubtitle">')
@@ -81,16 +84,36 @@ var refreshClubs = function () {
         $clubList.append($clubs);
     });
 
-    API.getYourClubs().then(function (data) {
-        console.log("this data: ", data);
-        if (data.length > 0) {
-            console.log("check this data: ", data);
-            $yourClubList.append('<h5>Your clubs:</h5>');
+    API.getYourClubs(idToGet).then(function (data) {
+        var $userClubDiv = $('#user-club-list');
 
+        if (data.length > 0) {
+            console.log("getYourClubs: ", data);
+
+            var $ownClubList = data[0].Clubs;
+            var $ownClubCount = $ownClubList.length;
+            var $memberClubList = data[0].Clubs2;
+            var $memberClubCount = $memberClubList.length;
+
+            console.log("ownClubCount: ", $ownClubCount);
+            console.log("ownClubList: ", $ownClubList);
+            console.log("memberClubCount: ", $memberClubCount);
+            console.log("memberClubList: ", $memberClubList);
+
+            var $ownClubTitle = $('<div class="ownclubs">');
+            var $memberClubTitle = $('<div class="memberclubs">');
+
+            
+
+        } else {
+            if (idToGet) {
+                $userClubDiv.append('Join a club or create your own!');
+            }
         }
     });
 
-}
+};
+
 
 
 
@@ -127,5 +150,3 @@ $clubList.on('click', '.delete', handleDeleteBtnClick);
 
 $clubList.on('click', '.joinbutton', handleJoinBtnClick);
 
-
-// handleJoinBtnClick);

@@ -1,8 +1,3 @@
-
-
-
-console.log("HI PROFILE PAGE");
-
 var $clubList = $('#club-list');
 
 // The API object contains methods for each kind of request we'll make
@@ -32,12 +27,12 @@ var refreshClub = function () {
 
     API.getClubs(idToGet).then(function (data) {
         var county = data[0].Clubs2.length;
-        if(county === 0){
+        if (county === 0) {
             county = "<a href='/clubs'>Join a book club!</a>";
-        }else if (county === 1){
-            county = "Member of " +county + " book club:";
-        }else {
-            county = "Member of " +county + " book clubs:";
+        } else if (county === 1) {
+            county = "Member of " + county + " book club:";
+        } else {
+            county = "Member of " + county + " book clubs:";
         };
         console.log("YO DATA: ", data);
         var $clubs = data[0].Clubs2.map(function (club) {

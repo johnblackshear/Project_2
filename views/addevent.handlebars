@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/styles/club.css" media="screen" title="no title" charset="utf-8">
+
 <style>
     .searchBar {
         width: 400px;
@@ -20,60 +22,92 @@
     }
 </style>
 
+<div class="container" id="sessionwrapper">
+    <div class="row">
+        <div class="col-md">
+            {{{session}}}
+        </div>
+    </div>
+</div>
+
+<div class="container" id="club-title-wrapper">
+    <div class="row">
+        <div class="col-md" id="club-header">
+            <h2>{{clubname}}</h2>
+            <span class="top">{{{id}}}</span>
+            <span class="top"><br>{{{message}}}</span>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
-        <div class="col-8 offset-2">
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title">Make Event</h5>{{{id}}}
-                    <div class="user-info">Username: {{username}}&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;User ID:
-                        {{userid}}<br>{{message}}<br><br></div>
-                    <form class="clearfix mb-4" action="POST">
-                        <div class="form-group">
-                            <label for="newevent-eventname">Event Name:</label>
-                            <input type="text" id="newevent-eventname" class="form-control"
-                                aria-describedby="newevent-eventname" placeholder="Enter event name">
-                        </div>
-                        <div class="form-group">
-                            <label for="newevent-description">Description:</label>
-                            <input type="text" id="newevent-description" class="form-control"
-                                aria-describedby="newevent-description" placeholder="Enter description">
-                        </div>
-                        <div class="form-group">
-                            <label for="newevent-date">Date:</label>
-                            <input type="text" id="newevent-date" class="form-control" aria-describedby="newevent-date"
-                                placeholder="Enter date">
-                        </div>
-                        <div class="form-group">
-                            <label for="newevent-time">Time:</label>
-                            <input type="text" id="newevent-time" class="form-control" aria-describedby="newevent-time"
-                                placeholder="Enter time">
-                        </div>
-                        <div class="form-group">
-                            <label for="newevent-location">Location:</label>
-                            <input type="text" id="newevent-location" class="form-control"
-                                aria-describedby="newevent-location" placeholder="Enter location">
-                        </div>
+        <div class="col-md" id="hmenu">
+            {{{addbutton}}}
+        </div>
+    </div>
+</div>
 
-                        {{!-- <label for="newevent-book">Book:</label> --}}
-                        {{!-- <input type="text" id="newevent-book" class="form-control" aria-describedby="newevent-book"
+<div class="container" id="clubwrapper">
+    <div class="row">
+        <div class="col-3" id="leftnav">
+            <br><br>
+            {{!-- <h4>{{clubname}}</h4> --}}
+            Owner: <div id="owner"></div><br>
+            Members: <span id="members"></span><br>
+            <div id="club-member-list"></div><br>
+        </div>
+        <div class="col-9">
+            <br><br>
+            <h5>Create a club event:</h5>
+            <br><br>
+            {{!-- {{{id}}} --}}
+            {{!-- <div class="user-info">Username: {{username}}&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;User ID:
+                {{userid}}<br>{{message}}<br><br></div> --}}
+            <form class="clearfix mb-4" action="POST">
+                <div class="form-group">
+                    <label for="newevent-eventname">Event Name:</label>
+                    <input type="text" id="newevent-eventname" class="form-control"
+                        aria-describedby="newevent-eventname" placeholder="Enter event name">
+                </div>
+                <div class="form-group">
+                    <label for="newevent-description">Event Description:</label>
+                    <input type="text" id="newevent-description" class="form-control"
+                        aria-describedby="newevent-description" placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                    <label for="newevent-date">Event Date:</label>
+                    {{!-- <input type="text" id="datepicker" class="form-control" aria-describedby="newevent-date"
+                        placeholder="Enter date"> --}}
+                    <div id="calendarDate"></div>
+                </div>
+                <div class="form-group">
+                    <label for="newevent-time">Event Time:</label>
+                    <input type="text" id="newevent-time" class="form-control" aria-describedby="newevent-time"
+                        placeholder="Enter time">
+                </div>
+                <div class="form-group">
+                    <label for="newevent-location">Event Location:</label>
+                    <input type="text" id="newevent-location" class="form-control" aria-describedby="newevent-location"
+                        placeholder="Enter location">
+                </div>
+
+                {{!-- <label for="newevent-book">Book:</label> --}}
+                {{!-- <input type="text" id="newevent-book" class="form-control" aria-describedby="newevent-book"
                                 placeholder="Enter book"> --}}
 
-                        <div class="intro">
-                            <h4 class="banner-title">Book Finder</h4>
-                        </div>
-                        <div class="searchBar">
-                            <input id="search" placeholder="Title or Author">
-                            <button id="book-search-button" type="button">Search</button>
-                        </div>
-                        <br>
-                        <div id="results"></div>
-
-
-                        <button id="submit-event" class="btn btn-primary float-right">Submit</button>
-                    </form>
+                <div class="intro">
+                    <h4 class="banner-title">Book Finder</h4>
                 </div>
-            </div>
+                <div class="searchBar">
+                    <input id="search" placeholder="Title or Author">
+                    <button id="book-search-button" type="button">Search</button>
+                </div>
+                <br>
+                <div id="results"></div>
+                <button id="submit-event" class="btn btn-primary float-right">Submit</button>
+            </form>
+
         </div>
     </div>
 </div>
@@ -81,6 +115,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/addevent.js"></script>
 
-<script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
 
+<script>
+    $(function () {
+        $("#calendarDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd'
+        });
+    });
 </script>
+

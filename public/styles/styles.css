@@ -101,9 +101,6 @@ a:hover {
 #add-club {
   padding: 5px;
   border: 1px solid #539092;
-  width: 200px;
-  float: right;
-  text-align: center;
   border-radius: 6px;
   font-weight: bold;
 }
@@ -197,4 +194,13 @@ li {
 #sessionwrapper {
   border: 1px solid #ccc;
   margin-bottom: 10px;
+  text-align: right;
+  opacity: 0.3;
+  transition: opacity .6s;
 }
+
+#sessionwrapper:hover {
+  opacity: 1;
+}
+
+
