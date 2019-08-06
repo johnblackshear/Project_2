@@ -259,14 +259,16 @@ module.exports = function (app) {
 
         var ownerId = results.UserId;
         var clubname = JSON.stringify(results.clubname);
+        // var clubId = results.id;
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
 
 
           if (ownerId === userId) {
             res.render("club", {
               session: 'You are logged in as <a href="/profile">' + username + '</a>.',
-              clubname: clubname,
-              id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
+              clubtitle: clubname,
+              clubname: '<a href="/clubs/' + clubId + '">' + clubname + '</a>',
+              id: 'Club ID: ' + clubId + '<span class=join id=join-btn-id data-clubid=' + clubId + '></span>',
               description: results.description,
               message: 'You are the owner of this club!',
               addbutton: '<button class="btn" id="event-add-btn" data-clubId=' + results.id + '>Add Event</button>'
@@ -276,16 +278,18 @@ module.exports = function (app) {
               if (count === 0) {
                 res.render("club", {
                   session: 'You are logged in as <a href="/profile">' + username + '</a>.',
-                  clubname: clubname,
-                  id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
+                  clubtitle: clubname,
+                  clubname: '<a href="/clubs/' + clubId + '">' + clubname + '</a>',
+                  id: 'Club ID: ' + clubId + '<span class=join id=join-btn-id data-clubid=' + clubId + '></span>',
                   description: results.description,
                   message: '<button class="btn" id="club-join-btn" data-clubId=' + results.id + '>Join Club</button>'
                 });
               } else {
                 res.render("club", {
                   session: 'You are logged in as <a href="/profile">' + username + '</a>.',
-                  clubname: clubname,
-                  id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
+                  clubtitle: clubname,
+                  clubname: '<a href="/clubs/' + clubId + '">' + clubname + '</a>',
+                  id: 'Club ID: ' + clubId + '<span class=join id=join-btn-id data-clubid=' + clubId + '></span>',
                   description: results.description,
                   message: 'You are a member of this club!'
                 });
@@ -301,11 +305,13 @@ module.exports = function (app) {
 
       // User is not logged in
       db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
+        console.log("dbclub.id: ", dbClub.id);
         var clubname = JSON.stringify(dbClub.clubname);
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
         res.render("club", {
           session: 'You are not logged in. <a href="/login">Login</a> or <a href="/register">Register</a>',
-          clubname: clubname,
+          clubtitle: clubname,
+          clubname: '<a href="/clubs/' + clubId + '">' + clubname + '</a>',
           id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
           description: dbClub.description
         });
