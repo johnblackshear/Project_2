@@ -7,7 +7,7 @@ const Op = Sequelize.Op;
 module.exports = function (app) {
 
   //////////////////////////////////////
-  // Homepage HTMLGET route
+  // Homepage HTML GET route
   app.get('/', function (req, res) {
     console.log('I AM HERE ======');
     // db === database find all from club model
@@ -42,7 +42,7 @@ module.exports = function (app) {
 
   //////////////////////////////////////
   // Users HTML GET route
-  app.get('/users', function (req, res) {
+  app.get('/admin/users', function (req, res) {
     db.User.findAll({}).then(function (dbUsers) {
       res.render('users');
     });
@@ -133,7 +133,6 @@ module.exports = function (app) {
         var favAuthors = userResult.favAuthors;
         var favBooks = userResult.favBooks;
         var favGenres = userResult.favGenres;
-
         res.render('profile', {
           username: renderUsername,
           email: renderEmail,
@@ -159,23 +158,19 @@ module.exports = function (app) {
   //////////////////////////////////////
   // Edit Profile 
   app.get("/edit", function (req, res) {
-
     // If the user is logged in
     if (req.session.loggedin) {
       // Set userIdValue to the user's Id
       var userIdValue = req.session.userid;
-
       res.render('edit', {
         userid: '<div id="getUserId" data-userid="' + userIdValue + '"></div>'
       });
-
     } else {
       // User is not logged in
       res.render('login', {
         msg: 'You are not logged in. Please log in to edit your profile:'
       });
     }
-
   });
   //////////////////////////////////////
 
@@ -189,7 +184,7 @@ module.exports = function (app) {
 
 
   //////////////////////////////////////
-  // Add Club page GET route
+  // Add Club GET route
   app.get('/addclub', function (req, res) {
     // If the user is logged in
     if (req.session.loggedin) {
@@ -241,53 +236,69 @@ module.exports = function (app) {
 
 
   //////////////////////////////////////
-  // Club GET ROUTE
+  // Club GET ROUTE by id
   app.get("/clubs/:id", function (req, res) {
     var clubId = req.params.id;
+    console.log("YOYO clubId: ", clubId);
+
     // If the user is logged in
     if (req.session.loggedin) {
       var userId = req.session.userid;
       var username = req.session.username;
 
-      console.log("userid", userId);
-      console.log("clubId:", clubId);
-      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
-        var ownerId = dbClub.UserId;
-        var clubname = JSON.stringify(dbClub.clubname);
-        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
-        if (ownerId === userId) {
-          res.render("club", {
-            session: 'You are logged in as <a href="/profile">' + username + '</a>.',
-            clubname: clubname,
-            id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
-            description: dbClub.description,
-            message: 'You are the owner of this club!',
-            addbutton: '<button class="btn" id="event-add-btn" data-clubId=' + dbClub.id + '>Add Event</button>'
-          });
-        } else {
-          db.User_Club.count({ where: { club_id: clubId, user_id: userId } }).then(function (count) {
-            if (count === 0) {
-              res.render("club", {
-                session: 'You are logged in as <a href="/profile">' + username + '</a>.',
-                clubname: clubname,
-                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
-                description: dbClub.description,
-                message: '<button class="btn" id="club-join-btn" data-clubId=' + dbClub.id + '>Join Club</button>'
-              });
-            } else {
-              res.render("club", {
-                session: 'You are logged in as <a href="/profile">' + username + '</a>.',
-                clubname: clubname,
-                id: 'Club ID: ' + dbClub.id + '<span class=join id=join-btn-id data-clubid=' + dbClub.id + '></span>',
-                description: dbClub.description,
-                message: 'You are a member of this club!'
-              });
-            }
-          });
+      console.log("YOYO LOGGED IN YES");
+      console.log("YOYO clubId: ", clubId);
+      console.log("YOYO userId: ", userId);
+      console.log("YOYO username: ", username);
+
+      db.Club.findOne({
+        where: {
+          id: clubId
         }
+      }).then(function (results) {
+
+        var ownerId = results.UserId;
+        var clubname = JSON.stringify(results.clubname);
+        clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
+
+
+          if (ownerId === userId) {
+            res.render("club", {
+              session: 'You are logged in as <a href="/profile">' + username + '</a>.',
+              clubname: clubname,
+              id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
+              description: results.description,
+              message: 'You are the owner of this club!',
+              addbutton: '<button class="btn" id="event-add-btn" data-clubId=' + results.id + '>Add Event</button>'
+            });
+          } else {
+            db.User_Club.count({ where: { club_id: clubId, user_id: userId } }).then(function (count) {
+              if (count === 0) {
+                res.render("club", {
+                  session: 'You are logged in as <a href="/profile">' + username + '</a>.',
+                  clubname: clubname,
+                  id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
+                  description: results.description,
+                  message: '<button class="btn" id="club-join-btn" data-clubId=' + results.id + '>Join Club</button>'
+                });
+              } else {
+                res.render("club", {
+                  session: 'You are logged in as <a href="/profile">' + username + '</a>.',
+                  clubname: clubname,
+                  id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
+                  description: results.description,
+                  message: 'You are a member of this club!'
+                });
+              }
+            });
+          }
+
       });
+
     } else {
-      console.log("***************** FIND ME *****************************");
+      console.log("YOYO LOGGED IN NO");
+      console.log("YOYO clubId: ", clubId);
+
       // User is not logged in
       db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
         var clubname = JSON.stringify(dbClub.clubname);
@@ -348,14 +359,11 @@ module.exports = function (app) {
       var userId = req.session.userid;
       var userName = req.session.username;
       console.log("req.session: ", req.session);
-
       db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
         var ownerId = dbClub.UserId;
         var clubname = JSON.stringify(dbClub.clubname);
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
-
         db.User_Club.count({ where: { club_id: clubId, user_id: userId } }).then(function (count) {
-
           if (count === 0) {
             // User is not a member of this club
             res.render("event", {
@@ -375,18 +383,22 @@ module.exports = function (app) {
               message: 'You are a member of this club!'
             });
           }
-
         });
-
       });
-
     } else {
       // User is not logged in
       res.render('login', {
         msg: 'You are not logged in. Please log in to view events:'
       });
-    }
+    };
 
   });
+  //////////////////////////////////////
+
+
+
+
+
+
 
 };

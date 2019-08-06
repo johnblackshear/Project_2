@@ -1,3 +1,5 @@
+console.log("club.js");
+
 var $joinButton = $('#club-join-btn');
 var $addEventButton = $('#event-add-btn');
 var $clubEventBriefDiv = $('#club-event-brief');
@@ -14,7 +16,7 @@ var API = {
             type: 'GET'
         });
     },
-    getOwner: function (id) {
+    getClubOwner: function (id) {
         return $.ajax({
             url: '/api/users/' + id,
             type: 'GET'
@@ -42,34 +44,33 @@ var API = {
 
 // // refreshClub gets new info from the db and repopulates the list
 var refreshClub = function () {
-
     API.getClub(idToGet).then(function (data) {
-        // console.log("CLUB DATA: ", data);
+        console.log("CLUB DATA: ", data);
+        var $clubOwnerId = data.UserId;
         var $members = data.Users.map(function (user) {
             var $a = $('<a>')
                 .text(user.username)
                 .attr('href', '/api/users/' + user.id)
                 .append(', ')
             return $a
-        })
+        });
         $clubMemberListColumn.empty();
         $clubMemberListColumn.append($members);
+
+        API.getClubOwner($clubOwnerId).then(function (data) {
+            console.log("data : ", data);
+            console.log("data[0].username : ", data[0].username);
+            var $clubOwner = data[0].username;
+            var $ownerLink = $('<a>')
+                .text($clubOwner)
+                .attr('href', '/api/users/' + $clubOwnerId);
+            $ownerDiv.empty();
+            $ownerDiv.append($ownerLink);
+        });
     });
 
-    API.getOwner(idToGet).then(function (data) {
-        // console.log("Ownerdata: ", data[0]);
-        $ownerDiv.empty();
-        var $owner = data[0];
-        var $a = $('<a>')
-            .text($owner.username)
-            .attr('href', '/api/users/' + $owner.id)
-        var $li = $('<li>').attr({ class: 'memberlist' });
-        $li.append($a);
-        $ownerDiv.append($li);
-    });
     // THIS CODE DISPLAYS EVENTS ON THE CLUB MAIN PAGE
     API.getClubEvents(idToGet).then(function (data) {
-
         for (var i = 0; i < data.length; i++) {
             var $date = data[i].date;
             var $year = $date.substring(0, 4);
@@ -91,10 +92,8 @@ var refreshClub = function () {
             var $bookthumbnail = data[i].bookthumbnail;
 
             $eventBookDiv.html('<img src="' + $bookthumbnail + '"><br>');
-
             $eventDateDiv.append($day + '<br>' + $monthName + '<br>' + $year + '<br>');
             $eventDetailDiv.append('<h5><a href="/clubs/' + idToGet + '/events/' + $eventId + '">' + $eventName + '</a></h5>' + $description + '<br>' + $location);
-
             $eventDiv.append($eventDateDiv, $eventDetailDiv, $eventBookDiv);
             $clubEventBriefDiv.append($eventDiv);
         }
@@ -102,23 +101,21 @@ var refreshClub = function () {
 
 };
 
+refreshClub();
+
 var handleJoinBtnClick = function () {
     $(this).attr("data-clubid")
     var idToJoin = $(this)
         .attr('data-clubid');
     API.joinClub(idToJoin);
-    $joinButton.hide();
-    refreshClub();
+    $joinButton.remove();
+    location.reload(true);
 };
 
 // Club owner will see Add Event button, click will redirect to the addevent page
 var handleAddEventBtnClick = function () {
-    // console.log("clicky");
-    // console.log("idToGet: ", idToGet);
     window.location.href = "/clubs/" + idToGet + "/addevent";
 };
-
-refreshClub();
 
 $joinButton.on('click', handleJoinBtnClick);
 $addEventButton.on('click', handleAddEventBtnClick);

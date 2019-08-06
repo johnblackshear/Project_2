@@ -4,17 +4,17 @@ var Op = Sequelize.Op;
 
 module.exports = function (app) {
 
-  ////////////////////////////////////////////////////////
-  // API USERS
-
+  //////////////////////////////////////
   // Register a new User
   app.post('/api/register', function (req, res) {
     db.User.create(req.body).then(function (dbUser) {
       res.json(dbUser);
     });
   });
+  //////////////////////////////////////
 
 
+  //////////////////////////////////////
   // Get All Users
   app.get("/api/users", function (req, res) {
     // Here we add an "include" property to our options in our findAll query
@@ -26,15 +26,10 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
-  // app.get('/api/users', function (req, res) {
-  //   db.User.findAll().then(function (dbUsers) {
-  //     res.json(dbUsers);
-  //   });
-  // });
+  //////////////////////////////////////
 
 
-
-
+  //////////////////////////////////////
   // Get a User by id
   app.get('/api/users/:id', function (req, res) {
     db.User.findAll({
@@ -44,10 +39,32 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
+  //////////////////////////////////////
 
 
+  //////////////////////////////////////
+  // Update a user's profile
+  app.put('/api/edit/:id', function (req, res) {
+    db.User.update(req.body, { where: { id: req.params.id } }).
+      then(function (dbUser) {
+        res.json(dbUser);
+      });
+  });
+  //////////////////////////////////////
 
 
+  //////////////////////////////////////
+  // Delete a User by id
+  app.delete('/api/users/:id', function (req, res) {
+    db.User.destroy({ where: { id: req.params.id } }).
+      then(function (dbUser) {
+        res.json(dbUser);
+      });
+  });
+  //////////////////////////////////////
+
+
+  //////////////////////////////////////
   // Get a User's clubs
   app.get('/api/users/:id/clubs', function (req, res) {
     db.User.findAll({
@@ -57,36 +74,81 @@ module.exports = function (app) {
       res.json(dbUser);
     });
   });
+  //////////////////////////////////////
 
-  db.Club.findAll().then(function (dbClubs) {
-    res.json(dbClubs);
+
+  //////////////////////////////////////
+  // Search Clubs by id (homepage club search)
+  app.get('/api/clubs/idsearch/:id', function (req, res) {
+    db.Club.findOne({
+      include: [{ model: db.User, as: 'Users' }],
+      where: { id: req.params.id }
+    }).then(function (dbClub) {
+      res.json(dbClub);
+    });
   });
+  //////////////////////////////////////
 
 
-
-  // Update a user's profile
-  app.put('/api/edit/:id', function (req, res) {
-    db.User.update(req.body, { where: { id: req.params.id } }).
-      then(function (dbUser) {
-
-        res.json(dbUser);
-      });
-
+  //////////////////////////////////////
+  // Search Clubs by name (homepage club search)
+  app.get('/api/clubs/namesearch/:name', function (req, res) {
+    db.Club.findAll({
+      include: [{ model: db.User, as: 'Users' }],
+      where: {
+        clubname: {
+          [Op.like]: '%' + req.params.name + '%'
+        }
+      }
+    }).then(function (dbClub) {
+      res.json(dbClub);
+    });
   });
+  //////////////////////////////////////
 
-  // Delete a User by id
-  app.delete('/api/users/:id', function (req, res) {
-    db.User.destroy({ where: { id: req.params.id } }).
-      then(function (dbUser) {
-        res.json(dbUser);
-      });
+
+
+  //////////////////////////////////////
+  //////////////////////////////////////
+  // Get all Clubs
+  app.get('/api/clubs', function (req, res) {
+    db.Club.findAll().then(function (dbClubs) {
+      res.json(dbClubs);
+    });
   });
-  ////////////////////////////////////////////////////////
+  //////////////////////////////////////
 
 
-  ////////////////////////////////////////////////////////
-  // API CLUBS
+  //////////////////////////////////////
+  // Get a Club by id
+  app.get('/api/clubs/:id', function (req, res) {
+    db.Club.findOne({
+      include: [{ model: db.User, as: 'Users' }],
+      where: { id: req.params.id }
+    }).then(function (dbClub) {
+      res.json(dbClub);
+    });
+  });
+  //////////////////////////////////////
 
+
+  //////////////////////////////////////
+  // Join a club by id
+  app.post('/api/clubs/:id', function (req, res) {
+    var userId = req.session.userid;
+    var clubId = req.params.id;
+    var userClubInfo = { user_id: userId, club_id: clubId };
+    console.log("HEY TEST");
+    console.log("userId:", userId);
+    console.log("clubId:", clubId);
+    db.User_Club.create(userClubInfo).then(function (dbClub) {
+      res.json(dbClub);
+    });
+  });
+  //////////////////////////////////////
+
+
+  //////////////////////////////////////
   // Create a new club
   app.post('/api/addclub', function (req, res) {
     console.log("* * * * ****** * * *");
@@ -101,79 +163,11 @@ module.exports = function (app) {
       db.User_Club.create(userClubInfo);
     });
   });
-
-
-  // Get all Clubs
-  app.get('/api/clubs', function (req, res) {
-    db.Club.findAll().then(function (dbClubs) {
-      res.json(dbClubs);
-    });
-  });
-
-
-  // // Get a Club by id
-  // app.get('/api/clubs/:id', function (req, res) {
-  //   db.Club.findOne({
-  //     include: [{model: db.User, as: 'Users', include: 
-  //     [{model: db.Event}]
-  //   }],
-  //     where: { id: req.params.id }
-  //   }).then(function (dbClub) {
-  //     res.json(dbClub);
-  //   });
-  // });
-
-  // ??????????????????????????????????????????????????
-
-  // Get a Club by id
-  app.get('/api/clubs/:id', function (req, res) {
-    db.Club.findOne({
-      include: [{ model: db.User, as: 'Users' }],
-      where: { id: req.params.id }
-    }).then(function (dbClub) {
-      res.json(dbClub);
-    });
-  });
-
-  //   include: [{model: Tool, as: 'Instruments', include: 
-  //       [
-  //         { 
-  //           model: Teacher, include: [ /* etc */] 
-  //         }
-  //       ]
-  //     }
-  //   ]
-  //     ??????????????????????????????????????????????????
-
-
-
-  // Join a club by id
-  app.post('/api/clubs/:id', function (req, res) {
-    var userId = req.session.userid;
-    var clubId = req.params.id;
-    var userClubInfo = { user_id: userId, club_id: clubId };
-    console.log("HEY TEST");
-    console.log("userId:", userId);
-    console.log("clubId:", clubId);
-    db.User_Club.create(userClubInfo).then(function (dbClub) {
-      res.json(dbClub);
-    });
-  });
-
-
-  // // Get a Club Owner
-  // app.get('/api/clubs/:id/owner', function (req, res) {
-  //   db.Club.getOwner({ where: { id: req.params.id } }).then(function (dbClub) {
-  //     res.json(dbClub);
-  //   });
-  // });
-
+  //////////////////////////////////////
 
 
   ////////////////////////////////////////////////////////
   // CLUB EVENTS API ROUTES
-
-  // Get a Clubs's events
   app.get('/api/clubs/:id/events', function (req, res) {
     db.Event.findAll({
       where: { ClubId: req.params.id },
@@ -184,12 +178,15 @@ module.exports = function (app) {
       res.json(dbClubEvents);
     });
   });
+  ////////////////////////////////////////////////////////
 
+
+  ////////////////////////////////////////////////////////
   // Get a specific club event by id
   app.get('/api/clubs/:id/events/:eventid', function (req, res) {
     db.Event.findAll({
-      where: { 
-        [Op.and]: [{ClubId: req.params.id}, {id: req.params.eventid}] 
+      where: {
+        [Op.and]: [{ ClubId: req.params.id }, { id: req.params.eventid }]
       },
       order: [
         ['date', 'DESC']
@@ -198,8 +195,10 @@ module.exports = function (app) {
       res.json(dbClubEvents);
     });
   });
+  ////////////////////////////////////////////////////////
 
 
+  ////////////////////////////////////////////////////////
   // Create an event
   app.post('/api/clubs/:id/addevent', function (req, res) {
     var newEventInfo = req.body;
@@ -213,31 +212,6 @@ module.exports = function (app) {
 
 
 
-  // SEARCH CLUBS ROUTES
-
-  // Search Clubs by id
-  app.get('/api/clubs/idsearch/:id', function (req, res) {
-    db.Club.findOne({
-      include: [{ model: db.User, as: 'Users' }],
-      where: { id: req.params.id }
-    }).then(function (dbClub) {
-      res.json(dbClub);
-    });
-  });
-
-  // Search Clubs by name
-  app.get('/api/clubs/namesearch/:name', function (req, res) {
-    db.Club.findAll({
-      include: [{ model: db.User, as: 'Users' }],
-      where: {
-        clubname: {
-          [Op.like]: '%' + req.params.name + '%'
-        }
-      }
-    }).then(function (dbClub) {
-      res.json(dbClub);
-    });
-  });
 
 
 

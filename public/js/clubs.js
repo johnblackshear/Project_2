@@ -1,8 +1,8 @@
 var $clubList = $('#club-list');
-var $yourClubList = $('#your-club-list');
 
-var idToGet = $yourClubList.attr('data-userid');
-console.log("IDTOGET: ", idToGet);
+// var $yourClubList = $('#your-club-list');
+// var idToGet = $yourClubList.attr('data-userid');
+// console.log("IDTOGET: ", idToGet);
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -12,12 +12,12 @@ var API = {
             type: 'GET'
         });
     },
-    getYourClubs: function (id) {
-        return $.ajax({
-            url: '/api/users/' + id + '/clubs',
-            type: 'GET'
-        });
-    },
+    // getYourClubs: function (id) {
+    //     return $.ajax({
+    //         url: '/api/users/' + id + '/clubs',
+    //         type: 'GET'
+    //     });
+    // },
     joinClub: function (id) {
         return $.ajax({
             url: 'api/clubs/' + id,
@@ -34,8 +34,6 @@ var API = {
 
 // refreshClubs gets new Clubs from the db and repopulates the list
 var refreshClubs = function () {
-
-
 
     API.getAllClubs().then(function (data) {
         console.log("check this data: ", data);
@@ -84,39 +82,33 @@ var refreshClubs = function () {
         $clubList.append($clubs);
     });
 
-    API.getYourClubs(idToGet).then(function (data) {
-        var $userClubDiv = $('#user-club-list');
+    // API.getYourClubs(idToGet).then(function (data) {
+    //     var $userClubDiv = $('#user-club-list');
 
-        if (data.length > 0) {
-            console.log("getYourClubs: ", data);
+    //     if (data.length > 0) {
+    //         console.log("getYourClubs: ", data);
 
-            var $ownClubList = data[0].Clubs;
-            var $ownClubCount = $ownClubList.length;
-            var $memberClubList = data[0].Clubs2;
-            var $memberClubCount = $memberClubList.length;
+    //         var $ownClubList = data[0].Clubs;
+    //         var $ownClubCount = $ownClubList.length;
+    //         var $memberClubList = data[0].Clubs2;
+    //         var $memberClubCount = $memberClubList.length;
 
-            console.log("ownClubCount: ", $ownClubCount);
-            console.log("ownClubList: ", $ownClubList);
-            console.log("memberClubCount: ", $memberClubCount);
-            console.log("memberClubList: ", $memberClubList);
+    //         console.log("ownClubCount: ", $ownClubCount);
+    //         console.log("ownClubList: ", $ownClubList);
+    //         console.log("memberClubCount: ", $memberClubCount);
+    //         console.log("memberClubList: ", $memberClubList);
 
-            var $ownClubTitle = $('<div class="ownclubs">');
-            var $memberClubTitle = $('<div class="memberclubs">');
+    //         var $ownClubTitle = $('<div class="ownclubs">');
+    //         var $memberClubTitle = $('<div class="memberclubs">');
 
-            
-
-        } else {
-            if (idToGet) {
-                $userClubDiv.append('Join a club or create your own!');
-            }
-        }
-    });
+    //     } else {
+    //         if (idToGet) {
+    //             $userClubDiv.append('Join a club or create your own!');
+    //         }
+    //     }
+    // });
 
 };
-
-
-
-
 
 
 // handleDeleteBtnClick is called when a club's delete button is clicked
@@ -143,10 +135,7 @@ var handleJoinBtnClick = function () {
     })
 }
 
-
-refreshClubs();
-
 $clubList.on('click', '.delete', handleDeleteBtnClick);
-
 $clubList.on('click', '.joinbutton', handleJoinBtnClick);
 
+refreshClubs();
