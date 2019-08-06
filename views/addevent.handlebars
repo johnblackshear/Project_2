@@ -77,9 +77,9 @@
                 </div>
                 <div class="form-group">
                     <label for="newevent-date">Event Date:</label>
-                    {{!-- <input type="text" id="datepicker" class="form-control" aria-describedby="newevent-date"
-                        placeholder="Enter date"> --}}
-                    <div id="calendarDate"></div>
+                    <input type="text" id="calendarDate" class="form-control" aria-describedby="newevent-date"
+                        placeholder="Enter date">
+                    {{!-- <div id="calendarDate"></div> --}}
                 </div>
                 <div class="form-group">
                     <label for="newevent-time">Event Time:</label>
@@ -122,7 +122,8 @@
         $("#calendarDate").datepicker({
             changeMonth: true,
             changeYear: true,
-            dateFormat: 'yy-mm-dd'
+            dateFormat: 'yy-mm-dd',
+            defaultDate: +7
         });
     });
 </script>

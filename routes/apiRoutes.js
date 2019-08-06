@@ -107,8 +107,6 @@ module.exports = function (app) {
   //////////////////////////////////////
 
 
-
-  //////////////////////////////////////
   //////////////////////////////////////
   // Get all Clubs
   app.get('/api/clubs', function (req, res) {
@@ -202,6 +200,7 @@ module.exports = function (app) {
   // Create an event
   app.post('/api/clubs/:id/addevent', function (req, res) {
     var newEventInfo = req.body;
+    console.log("newEventInfo: ", newEventInfo);
     newEventInfo.ClubId = req.params.id;
     console.log("newEventInfo: ", newEventInfo);
     db.Event.create(newEventInfo).then(function (newClubEvent) {
