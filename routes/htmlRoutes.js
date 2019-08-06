@@ -325,19 +325,19 @@ module.exports = function (app) {
       var userid = req.session.userid;
       var username = req.session.username;
       console.log("clubId: ", clubId);
-      db.Club.findOne({ where: { id: clubId } }).then(function (dbClub) {
-        var ownerId = dbClub.UserId;
-        var clubname = JSON.stringify(dbClub.clubname);
+      db.Club.findOne({ where: { id: clubId } }).then(function (results) {
+        var ownerId = results.UserId;
+        var clubname = JSON.stringify(results.clubname);
         clubname = clubname.replace(/^"(.+(?="$))"$/, '$1');
         if (ownerId === userid) {
           res.render('addevent', {
             session: 'You are logged in as <a href="/profile">' + username + '</a>.',
             userid: userid,
             clubname: clubname,
+            id: 'Club ID: ' + results.id + '<span class=join id=join-btn-id data-clubid=' + results.id + '></span>',
             username: username,
             message: 'You are the owner of this club!',
-            id: 'Club ID: ' + dbClub.id + '<span class=join id=theClubId data-clubid=' + dbClub.id + '></span>',
-            addbutton: '<button class="btn" id="event-add-btn" data-clubId=' + dbClub.id + '>Add Event</button>'
+            addbutton: '<button class="btn" id="event-add-btn" data-clubId=' + results.id + '>Add Event</button>'
           });
         }
       });
