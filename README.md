@@ -1,1 +1,4 @@
-# Project_2
+# Beluga Book Club
+
+## Link to app
+https://beluga2.herokuapp.com/
